@@ -57,6 +57,7 @@ class AdminController extends Controller
 
     /**
      * Индексная страница - вывод всех категорий и товаров
+     * @param integer $id
      * @return string
      */
     public function actionIndex()
@@ -66,6 +67,10 @@ class AdminController extends Controller
 
             $searchModel = new CategorieSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//var_dump($dataProvider);die;
+//            $model = new Product();
+//            $dataProvider= Product::find()->with('categorie')->all();
+//            var_dump($dataProvider);die;
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
