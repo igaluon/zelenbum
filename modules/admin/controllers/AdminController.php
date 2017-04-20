@@ -65,7 +65,7 @@ class AdminController extends Controller
 
         if (!Yii::$app->user->isGuest) {
 
-            $searchModel = new CategorieSearch();
+            $searchModel = new ProductSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 //var_dump($dataProvider);die;
 //            $model = new Product();
