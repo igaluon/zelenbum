@@ -1,0 +1,392 @@
+<?php
+
+namespace app\modules\admin\controllers;
+
+use Yii;
+use app\imageresize\ImageResize;
+use app\models\Category;
+use app\models\CategorySearch;
+use app\models\ProductSearch;
+use app\models\User;
+use yii\filters\AccessControl;
+use yii\helpers\BaseFileHelper;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\filters\VerbFilter;
+use app\models\LoginForm;
+use app\models\Product;
+use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
+use yii\web\UrlManager;
+
+/**
+ * Class AdminController
+ * @package app\modules\admin\controllers
+ */
+class AdminController extends Controller
+{
+    public $layout = 'admin/main';
+
+    /**
+     * Права доступа в админку
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'controllers' => ['admin/admin'],
+                        'roles' => ['@'] // авторизованные доступ ко всей админке
+                    ],
+                    [
+                        'allow' => true,
+                        'controllers' => ['admin/admin'],
+                        'actions' => ['login'],
+                        'verbs' => ['GET', 'POST'],
+                        'roles' => ['?'] // неавторизованные доступ только к логину
+                    ],
+                ]
+            ],
+
+        ];
+    }
+
+    /**
+     * Индексная страница - вывод всех категорий и товаров
+     * @return string
+     */
+    public function actionIndex()
+    {
+
+        if (!Yii::$app->user->isGuest) {
+
+            $searchModel = new CategorySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
+        return $this->redirect('login');
+    }
+
+    /**
+     * Вход в админку
+     * @return string
+     */
+    public function actionLogin()
+    {
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $this->redirect('admin');
+
+        }
+
+        $this->layout = 'admin/main-login';
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Редактирование отдельной категории
+     * @return mixed
+     */
+    public function actionEdit()
+    {
+
+        $name = \yii::$app->request->get('name');
+
+        $model_category = $this->findCategoryModel($name);
+
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('edit', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'name_rus' => $model_category->category_name,
+            'name' => $name,
+        ]);
+
+    }
+
+    /**
+     * Обновление данных как с индексной страницы, так и с отдельных категорий($edit)
+     * @param integer $id
+     * @return mixed
+     */
+
+    public function actionUpdate($id)
+    {
+
+        $model = $this->findModel($id);
+        // получаем пост-данные
+        if ($model->load( Yii::$app->request->post()) ) {
+            // получаем картинку из формы, если она выбрана
+            $model->images = UploadedFile::getInstance($model, 'images');
+            // если картинка существует - загружаем новую
+            if($model->images) {
+                // если есть предидущая картинка - удаляем ее
+                if($model->image) {
+                   unlink($model->image);
+                } // валидируем данные
+                if ($model->validate()) {
+                    // загружаем новую картинку в нужную директорию
+                    $path = Yii::getAlias("@app/web/uploads/" . $model->category_name);
+                    $extens = time() .'.' .$model->images->extension;
+                    $model->images->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+
+                    // Изменение размера картинки на нужный нам
+                    // -----------------------------------------
+                    // Получаем картинку из директории
+                    $image = $path . DIRECTORY_SEPARATOR . $extens;
+                    // Даем новое имя
+                    $new_name = $path .DIRECTORY_SEPARATOR .time() .'.' .$model->images->extension;
+
+                    // Вызываем экземпляр класса ImageResize
+                    $imageresize = new ImageResize();
+
+                    // Вызываем метод imageresize и задаем размеры картинки
+                    $imageresize::imageresize($image, $new_name, 220, 300);
+
+                    // -----------------------------------------
+
+                    // создаем адрес новой картинки для записи в базу данных
+//                        $image = 'uploads/' .$model->category_name .DIRECTORY_SEPARATOR .$model->images;
+                        $image = 'uploads/' .$model->category_name .DIRECTORY_SEPARATOR .$extens;
+                        $model->image = $image;
+                    // сохраняем все данные в базу
+                        $model->save(false);
+                    // если редактировалась отдельная категория - редирект на категорию(edit)
+                    if (\yii::$app->session->get('edit') == 'edit') {
+                        return $this->redirect(['edit', 'name' => \yii::$app->session->get('name')]);
+                    }
+                        // если пришли с индекса - возвращаемся на индексную страницу
+                     return $this->redirect(['index']);
+                }
+            }  // если картинка не выбрана - обновляются остальные данные
+                $model->save();
+            // если редактировалась отдельная категория - редирект на категорию(edit)
+            if (\yii::$app->session->get('edit') == 'edit') {
+                return $this->redirect(['edit', 'name' => \yii::$app->session->get('name')]);
+            }
+            // если пришли с индекса - возвращаемся на индексную страницу
+                return $this->redirect(['index']);
+      } // вывод формы обновления
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Создание категории
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new Category();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('_create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Удаление товара
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+
+        $model = $this->findModel($id);
+
+        \yii::$app->session->set('name', $model->category_name);
+
+        if (is_file($model->image)) {
+        unlink($model->image);
+        }
+
+        $model->delete();
+
+        if (\yii::$app->session->get('name')) {
+            $name = \yii::$app->request->get('name');
+           return $this->redirect(['edit', 'name'=> \yii::$app->session->get('name')]);
+        }
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Выбор категории для загрузки картинок
+     * @return string
+     */
+    public function actionCategory()
+    {
+
+        $name = Yii::$app->request->get('name');
+
+       \yii::$app->session->set('name', $name);
+
+        $path = Yii::getAlias("@app/web/uploads/" . $name . "/");
+        $images = [];
+
+        try {
+            if(is_dir($path)) {
+                $files = \yii\helpers\FileHelper::findFiles($path);
+
+                foreach ($files as $file) {
+                    $images[] = '<img src="/web/uploads/' . $name . '/' . basename($file) . '" width=250>';
+                }
+            }
+        }
+        catch(\yii\base\Exception $e){}
+
+        $name_category = $this->findCategoryModel($name)->category_name;
+
+        return $this->render("category",['images' => $images, 'name' => $name, 'name_category' => $name_category]);
+
+    }
+
+    /**
+     * Загрузка картинок
+     * @return bool
+     */
+    public function actionFileUploadImages()
+    {
+        if(Yii::$app->request->isPost){
+
+            // Получаем картинки через метод-post
+            $name_category = Yii::$app->request->post('name');
+
+            // Создаем путь для загрузки картинки
+            $path = Yii::getAlias("@app/web/uploads/" . $name_category);
+            // Создаем директорию для загрузки картинки
+            BaseFileHelper::createDirectory($path, 0755, true);
+            // Достаем картинку из формы
+            $file = UploadedFile::getInstanceByName('images');
+            // Меняем название картинки для защиты от кирилицы
+            $extens = time().'.'.$file->extension;
+            // Загружаем картинку в нужную директорию
+            $file->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+//            $file->saveAs($path .DIRECTORY_SEPARATOR .$file);
+
+            // Изменение размера картинки на нужный нам
+            // -----------------------------------------
+            // Получаем картинку из директории
+            $image = $path .DIRECTORY_SEPARATOR .$extens;
+            // Даем новое имя
+            $new_name = $path .DIRECTORY_SEPARATOR .$extens;
+
+            // Создаем экземпляр класса ImageResize
+            $imageresize = new ImageResize();
+
+            // Вызываем метод imageresize и задаем размеры картинки
+            $imageresize::imageresize($image, $new_name, 220, 300);
+
+            // -----------------------------------------
+
+            // Сохраняем все данные в базу
+            $category = Category::findOne(['category' => $name_category]);
+
+            $values = [
+                'category' => $category->category_name,
+                'category_name' => $name_category,
+                'image' => 'uploads/' .$name_category .DIRECTORY_SEPARATOR .$extens,
+            ];
+
+            $product = new Product();
+
+            $product->attributes = $values;
+            $product->save();
+
+            sleep(1);
+            return true;
+
+        }
+    }
+
+    /**
+     * Выход из админки
+     * @param bool $destroySession
+     * @return \yii\web\Response
+     */
+    public function actionLogout($destroySession = true)
+    {
+
+        \Yii::$app->user->logout();
+        return $this->goBack();
+    }
+
+    /**
+     * Получаем модель Product по id
+     * @param integer $id
+     * @return Product the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Получаем модель Product по name (названию категории)
+     * @param $name
+     * @return static
+     */
+    protected function findProductModel($name)
+    {
+        $model = Product::findOne(['category_name' => $name]);
+        return $model;
+
+    }
+
+    /**
+     * Получаем модель Category по name (названию категории)
+     * @param $name
+     * @return static
+     */
+    protected function findCategoryModel($name)
+    {
+        $model = Category::findOne(['category' => $name]);
+        return $model;
+
+    }
+
+/**
+ * Установка логина и пароля админа
+ */
+//    public function actionAddAdmin()
+//    {
+//        $model = User::find()->one();
+
+//        if (empty($model)) {
+//            $user = new User();
+//            $user->username = 'admin';
+//            $user->setPassword('123456');
+//            $user->generateAuthKey();
+//            if ($user->save()) {
+//                echo 'Its good';
+//            }
+//        }
+//    }
+
+}
