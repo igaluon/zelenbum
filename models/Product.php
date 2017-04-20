@@ -9,10 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property int $categorie_id
- * @property string $image
  * @property string $product
  * @property string $slug
  * @property string $description
+ * @property string $image
  *
  * @property Categorie $categorie
  */
@@ -33,10 +33,10 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['categorie_id'], 'integer'],
-            ['product', 'required'],
+            [['product', 'image'], 'required'],
             [['description'], 'string'],
-            [['image', 'product', 'slug'], 'string', 'max' => 255],
-            [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorys_id' => 'id']],
+            [['product', 'slug', 'image'], 'string', 'max' => 255],
+            [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorie_id' => 'id']],
         ];
     }
 
@@ -48,10 +48,10 @@ class Product extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'categorie_id' => 'Categorie ID',
-            'image' => 'Image',
-            'product' => 'Product Name',
+            'product' => 'Product',
             'slug' => 'Slug',
             'description' => 'Description',
+            'image' => 'Image',
         ];
     }
 

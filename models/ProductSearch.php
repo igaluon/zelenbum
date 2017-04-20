@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use app\models\Product;
 
 /**
  * ProductSearch represents the model behind the search form of `app\models\Product`.
@@ -18,7 +19,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'categorie_id'], 'integer'],
-            [['image', 'product', 'slug', 'description'], 'safe'],
+            [['product', 'slug', 'description', 'image'], 'safe'],
         ];
     }
 
@@ -62,10 +63,10 @@ class ProductSearch extends Product
             'categorie_id' => $this->categorie_id,
         ]);
 
-        $query->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'product', $this->product])
+        $query->andFilterWhere(['like', 'product', $this->product])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;
     }
