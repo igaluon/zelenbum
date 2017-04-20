@@ -4,20 +4,20 @@ namespace app\models;
 
 use Yii;
 
-
 /**
- * This is the model class for table "category".
+ * This is the model class for table "product".
  *
  * @property int $id
+ * @property int $categorie_id
  * @property string $image
- * @property string $category
- * @property string $name
- * @property string $product_name
+ * @property string $product
+ * @property string $slug
  * @property string $description
+ *
+ * @property Categorie $categorie
  */
 class Product extends \yii\db\ActiveRecord
 {
-    public $images;
     /**
      * @inheritdoc
      */
@@ -26,29 +26,17 @@ class Product extends \yii\db\ActiveRecord
         return 'product';
     }
 
-//    public function scenarios()
-//    {
-//        $scenarios = parent::scenarios();
-//        $scenarios['fileimput'] = [
-//            [['images'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg','gif'],
-//            [[ 'category', 'name','image'], 'string', 'max' => 55],
-//            [['product_name'], 'string', 'max' => 255],
-//            [['description'], 'string', 'max' => 500],
-//        ];
-//        return $scenarios;
-//    }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-//            [['images'], 'image', 'skipOnEmpty' => false, 'extensions' => ['png, jpg','gif']],
-            [['image'], 'image', 'maxSize' => 1024 * 1024 * 5],
-            [[ 'category', 'category_name'], 'string', 'max' => 55],
-            [['product_name', 'image'], 'string', 'max' => 255],
-            [['description'], 'string', 'max' => 500],
+            [['categorie_id'], 'integer'],
+            ['product', 'required'],
+            [['description'], 'string'],
+            [['image', 'product', 'slug'], 'string', 'max' => 255],
+            [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorys_id' => 'id']],
         ];
     }
 
@@ -59,19 +47,19 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image' => 'Картинка',
-            'images' => 'Картинка',
-            'category' => 'Категория',
-            'category_name' => 'Name',
-            'product_name' => 'Название продукта',
-            'description' => 'Описание',
+            'categorie_id' => 'Categorie ID',
+            'image' => 'Image',
+            'product' => 'Product Name',
+            'slug' => 'Slug',
+            'description' => 'Description',
         ];
     }
 
-    public function getCat($name)
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategorie()
     {
-        return $this->hasMany(Category::className(), ['category_name' => 'category'])
-            ->where('category_name :threshold', [':threshold' => $name]);
+        return $this->hasOne(Categorie::className(), ['id' => 'categorie_id']);
     }
-
 }

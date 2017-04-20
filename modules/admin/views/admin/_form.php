@@ -30,7 +30,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
     <?= $form->field($model, 'images')->fileInput() ?>
 
-    <?= $form->field($model, 'product_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInputtextarea(['maxlength' => true]) ?>
 

@@ -17,7 +17,7 @@
                                             ['label' => 'Ассортимент',
                                                 'options'=>['class'=>'dropdown'],
                                                 'lableTamplate' => '{lable}',
-                                                'items' =>  app\models\Categorys::menuItems(),
+                                                'items' =>  app\models\Categorie::menuItems(),
 //                                                'items' => [
 //                                                    ['label' => 'Дерево', 'url' => ['site/products', 'id' => 'tree', 'name' => 'Дерево']],
 //                                                    ['label' => 'Камень', 'url' => ['site/products', 'id' => 'rock', 'name' => 'Камень']],

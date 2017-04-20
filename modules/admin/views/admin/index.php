@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\CategorySearch */
+/* @var $searchModel app\models\CategorieSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Все категории';
@@ -41,13 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
             ],
             [
-                'attribute' => 'category',
+                'attribute' => 'categorie',
                 'format' => 'text',
                 'label' => 'Категория',
             ],
             [
 
-                'attribute' => 'product_name',
+                'attribute' => 'product',
                 'format' => 'text',
                 'label' => 'Название товара',
             ],

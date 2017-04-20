@@ -2,10 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Categorie;
 use Yii;
 use app\imageresize\ImageResize;
-use app\models\Category;
-use app\models\CategorySearch;
+use app\models\CategorieSearch;
 use app\models\ProductSearch;
 use app\models\User;
 use yii\filters\AccessControl;
@@ -64,7 +64,7 @@ class AdminController extends Controller
 
         if (!Yii::$app->user->isGuest) {
 
-            $searchModel = new CategorySearch();
+            $searchModel = new CategorieSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
@@ -106,7 +106,7 @@ class AdminController extends Controller
 
         $name = \yii::$app->request->get('name');
 
-        $model_category = $this->findCategoryModel($name);
+        $model_category = $this->findCategorieModel($name);
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -114,7 +114,7 @@ class AdminController extends Controller
         return $this->render('edit', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'name_rus' => $model_category->category_name,
+            'name_rus' => $model_category->categorie,
             'name' => $name,
         ]);
 
@@ -189,18 +189,23 @@ class AdminController extends Controller
     }
 
     /**
-     * Создание категории
-     * @return string|\yii\web\Response
+     * Creates a new Category model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param int $id id of the parent category
+     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
-        $model = new Category();
+        $categories = Categorie::find()->all();
+        $model = new Categorie();
+        $model->parent_id = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('_create', [
                 'model' => $model,
+                'categories' => $categories,
             ]);
         }
     }
@@ -256,7 +261,7 @@ class AdminController extends Controller
         }
         catch(\yii\base\Exception $e){}
 
-        $name_category = $this->findCategoryModel($name)->category_name;
+        $name_category = $this->findCategorieModel($name)->category;
 
         return $this->render("category",['images' => $images, 'name' => $name, 'name_category' => $name_category]);
 
@@ -301,11 +306,10 @@ class AdminController extends Controller
             // -----------------------------------------
 
             // Сохраняем все данные в базу
-            $category = Category::findOne(['category' => $name_category]);
+            $category = Categorie::findOne(['category' => $name_category]);
 
             $values = [
-                'category' => $category->category_name,
-                'category_name' => $name_category,
+                'category' => $category->category,
                 'image' => 'uploads/' .$name_category .DIRECTORY_SEPARATOR .$extens,
             ];
 
@@ -364,9 +368,9 @@ class AdminController extends Controller
      * @param $name
      * @return static
      */
-    protected function findCategoryModel($name)
+    protected function findCategorieModel($name)
     {
-        $model = Category::findOne(['category' => $name]);
+        $model = Categorie::findOne(['category' => $name]);
         return $model;
 
     }
