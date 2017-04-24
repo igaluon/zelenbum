@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 // Записываем в сессию название текущей категории $name, которая передается в экшен update
 \yii::$app->session->set('name', $name);
 
-$this->title = $name_rus;
+$this->title = $name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
 
-                'attribute' => 'product_name',
+                'attribute' => 'product',
                 'format' => 'text',
                 'label' => 'Название товара',
             ],

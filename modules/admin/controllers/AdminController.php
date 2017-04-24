@@ -65,12 +65,13 @@ class AdminController extends Controller
 
         if (!Yii::$app->user->isGuest) {
 
+//            $categorie = Product::find()->with([
+//                'categorie' => function ($query) {
+//                        $query->andWhere(['id' => 4]);
+//                    },
+//            ])->all();
             $searchModel = new ProductSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//var_dump($dataProvider);die;
-//            $model = new Product();
-//            $dataProvider= Product::find()->with('categorie')->all();
-//            var_dump($dataProvider);die;
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
@@ -109,9 +110,9 @@ class AdminController extends Controller
     public function actionEdit()
     {
 
-        $name = \yii::$app->request->get('name');
+        $name = \yii::$app->request->get('id');
 
-        $model_category = $this->findCategorieModel($name);
+//        $model_category = $this->findCategorieModel($name);
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -119,7 +120,7 @@ class AdminController extends Controller
         return $this->render('edit', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'name_rus' => $model_category->categorie,
+//            'name_rus' => $model_category->categorie,
             'name' => $name,
         ]);
 
@@ -147,7 +148,8 @@ class AdminController extends Controller
                 } // валидируем данные
                 if ($model->validate()) {
                     // загружаем новую картинку в нужную директорию
-                    $path = Yii::getAlias("@app/web/uploads/" . $model->category_name);
+                    $path = Yii::getAlias("@app/web/uploads/" . $model->categorie_id);
+                    var_dump($path);die;
                     $extens = time() .'.' .$model->images->extension;
                     $model->images->saveAs($path .DIRECTORY_SEPARATOR .$extens);
 
@@ -168,7 +170,7 @@ class AdminController extends Controller
 
                     // создаем адрес новой картинки для записи в базу данных
 //                        $image = 'uploads/' .$model->category_name .DIRECTORY_SEPARATOR .$model->images;
-                        $image = 'uploads/' .$model->category_name .DIRECTORY_SEPARATOR .$extens;
+                        $image = 'uploads/' .$model->categorie_id .DIRECTORY_SEPARATOR .$extens;
                         $model->image = $image;
                     // сохраняем все данные в базу
                         $model->save(false);
@@ -248,9 +250,9 @@ class AdminController extends Controller
     public function actionCategory()
     {
 
-        $name = Yii::$app->request->get('name');
+        $name = Yii::$app->request->get('id');
 
-       \yii::$app->session->set('name', $name);
+       \yii::$app->session->set('id', $name);
 
         $path = Yii::getAlias("@app/web/uploads/" . $name . "/");
         $images = [];
@@ -266,9 +268,9 @@ class AdminController extends Controller
         }
         catch(\yii\base\Exception $e){}
 
-        $name_category = $this->findCategorieModel($name)->category;
-
-        return $this->render("category",['images' => $images, 'name' => $name, 'name_category' => $name_category]);
+//        $name_category = $this->findCategorieModel($name)->categorie;
+//var_dump($name);die;
+        return $this->render("category",['images' => $images, 'name' => $name]);
 
     }
 
@@ -278,8 +280,8 @@ class AdminController extends Controller
      */
     public function actionFileUploadImages()
     {
-        if(Yii::$app->request->isPost){
 
+        if(Yii::$app->request->isPost){
             // Получаем картинки через метод-post
             $name_category = Yii::$app->request->post('name');
 
@@ -311,10 +313,8 @@ class AdminController extends Controller
             // -----------------------------------------
 
             // Сохраняем все данные в базу
-            $category = Categorie::findOne(['category' => $name_category]);
 
             $values = [
-                'category' => $category->category,
                 'image' => 'uploads/' .$name_category .DIRECTORY_SEPARATOR .$extens,
             ];
 
@@ -354,6 +354,17 @@ class AdminController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+//        if ($model = Product::find()->with('categorie')->where(['id' => $id])->one() !== null) {
+//            return $model;
+//        } else {
+//            throw new NotFoundHttpException('The requested page does not exist.');
+//        }
+//        $model = Product::find()->with('categorie')->where(['id' => $id])->one();
+    }
+
+    public function actionModel()
+    {
+
     }
 
     /**
@@ -375,7 +386,7 @@ class AdminController extends Controller
      */
     protected function findCategorieModel($name)
     {
-        $model = Categorie::findOne(['category' => $name]);
+        $model = Categorie::findOne(['categorie' => $name]);
         return $model;
 
     }

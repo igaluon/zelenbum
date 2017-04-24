@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Все категории';
+$this->title = 'Все продукты';
 $this->params['breadcrumbs'][] = $this->title;
 
 \yii::$app->session->set('name', '');
@@ -28,8 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'attribute' => 'id',
+                'format' => 'integer',
+                'label' => 'ID',
+            ],
             [
                 'label' => 'Картинка',
                 'format' => 'raw',
@@ -44,7 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'categorie',
                 'format' => 'text',
                 'label' => 'Категория',
+                'value' => 'categorie.categorie',
             ],
+//            [
+//                'label' => 'Категория',
+//                'format' => 'text',
+//                'value' => function($data){
+//                       return \app\models\Categorie::getCategor($data->categorie_id);
+//                       },
+//            ],
             [
 
                 'attribute' => 'product',

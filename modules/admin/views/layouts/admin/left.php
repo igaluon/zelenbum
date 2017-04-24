@@ -42,7 +42,7 @@ use app\models\Category;
                     ['label' => 'Категории',
 
 //                         'items' =>  Category::CategoryMenu()],
-                         'items' =>  app\models\Categorie::menuItems()],
+                         'items' =>  app\models\Categorie::menuAdminItems()],
 
                     ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => ['../admin/tag']],
                 ],

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "product".
@@ -13,11 +14,10 @@ use Yii;
  * @property string $slug
  * @property string $description
  * @property string $image
- *
- * @property Categorie $categorie
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
+    public $images;
     /**
      * @inheritdoc
      */
@@ -34,7 +34,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['categorie_id'], 'integer'],
             [['product', 'image'], 'required'],
-            [['description'], 'string'],
+            [['description',], 'string'],
             [['product', 'slug', 'image'], 'string', 'max' => 255],
             [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorie_id' => 'id']],
         ];

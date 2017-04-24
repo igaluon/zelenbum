@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row">
     <?php
-    echo "<h3>",  \yii\helpers\Html::label( ucfirst($name_category) ), "</h3>";
+    echo "<h3>",  \yii\helpers\Html::label( ucfirst($name) ), "</h3>";
 
     echo \kartik\file\FileInput::widget([
         'name' => 'images',
