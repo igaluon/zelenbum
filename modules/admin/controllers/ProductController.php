@@ -1,20 +1,26 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
+use app\imageresize\ImageResize;
+use app\models\Categorie;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
+use yii\helpers\BaseFileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
 class ProductController extends Controller
 {
-    public $layout = 'default';
+    public $layout = 'admin/main';
+//    public $layout = '//modules/admin/admin/layuots/main';
+
     /**
      * @inheritdoc
      */
@@ -64,13 +70,61 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Product();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $product = new Product();
+
+        if ($product->load( Yii::$app->request->post()) ) {
+
+            // Получаем категорию через метод-post
+var_dump($product->categorie);die;
+            // Создаем путь для загрузки картинки
+            $path = Yii::getAlias("@app/web/uploads/" . $product['Product']['categorie']);
+
+            // Создаем директорию для загрузки картинки
+            BaseFileHelper::createDirectory($path, 0755, true);
+
+            // Достаем картинку из формы
+            $file = UploadedFile::getInstanceByName($product['Product']['images']);
+var_dump($file);die;
+            // Меняем название картинки для защиты от кирилицы
+            $extens = time().'.'.$file->extension;
+
+            // Загружаем картинку в нужную директорию
+            $file->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+
+            // Изменение размера картинки на нужный нам
+            // -----------------------------------------
+            // Получаем картинку из директории
+            $image = $path .DIRECTORY_SEPARATOR .$extens;
+            // Даем новое имя
+            $new_name = $path .DIRECTORY_SEPARATOR .$extens;
+
+            // Создаем экземпляр класса ImageResize
+            $imageresize = new ImageResize();
+
+            // Вызываем метод imageresize и задаем размеры картинки
+            $imageresize::imageresize($image, $new_name, 220, 300);
+
+            // -----------------------------------------
+
+            // Сохраняем все данные в базу
+
+            $values = [
+                'image' => 'uploads/' .$product->categorie_id .DIRECTORY_SEPARATOR .$extens,
+            ];
+
+            $product->attributes = $values;
+            $product->save(false);
+
+            return $this->redirect(['view', 'id' => $product->id]);
+
         } else {
+
+            $categories = Categorie::find()->all();
+
             return $this->render('create', [
-                'model' => $model,
+                'model' => $product,
+                'categories' => $categories,
             ]);
         }
     }

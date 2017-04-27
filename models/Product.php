@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
 class Product extends ActiveRecord
 {
     public $images;
+    public $categorie;
     /**
      * @inheritdoc
      */
@@ -33,8 +34,8 @@ class Product extends ActiveRecord
     {
         return [
             [['categorie_id'], 'integer'],
-            [['product', 'image'], 'required'],
-            [['description',], 'string'],
+            [['product'], 'required'],
+            [['description'], 'string'],
             [['product', 'slug', 'image'], 'string', 'max' => 255],
             [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorie_id' => 'id']],
         ];
@@ -48,9 +49,9 @@ class Product extends ActiveRecord
         return [
             'id' => 'ID',
             'categorie_id' => 'Categorie ID',
-            'product' => 'Product',
+            'product' => 'Товар',
             'slug' => 'Slug',
-            'description' => 'Description',
+            'description' => 'Описание',
             'image' => 'Image',
         ];
     }

@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "categorie".
  *
- * @property int $id
  * @property string $categorie
  * @property string $slug
  * @property int $parent_id
@@ -18,6 +17,7 @@ use Yii;
  */
 class Categorie extends \yii\db\ActiveRecord
 {
+    public $product;
     /**
      * @inheritdoc
      */
@@ -46,7 +46,7 @@ class Categorie extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'categorie' => 'Categorie',
+            'categorie' => 'Категория',
             'slug' => 'Slug',
             'parent_id' => 'Parent ID',
         ];
@@ -139,7 +139,7 @@ class Categorie extends \yii\db\ActiveRecord
     }
 
     /**
-     * Вывод главного меню
+     * Вывод меню в админке
      * @return array
      */
     public static function menuAdminItems()
@@ -169,9 +169,12 @@ class Categorie extends \yii\db\ActiveRecord
 //                    'active' => true,
                     'label' => $category->categorie,
 //                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
-                    'url' => $category->parent_id === $parent ? ['edit', 'id' => $category->categorie] : '#',
+                    'url' => $category->parent_id === $parent ? ['category', 'id' => $category->id] : '#',
 //                    'url' => ['catalog/list', 'id' => $category->id],
                     'items' => static::getAdminMenuItems($categories, $activeId, $category->id),
+
+//                        ['label' => 'Загрузить картинки', 'icon' => 'fa fa-file-code-o', 'url' => ['admin/category', 'id' => $category->categorie],],
+//                        ['label' => 'Редактировать ', 'icon' => 'fa fa-dashboard', 'url' => ['admin/edit', 'id' => $category->id],],
                 ];
             }
         }

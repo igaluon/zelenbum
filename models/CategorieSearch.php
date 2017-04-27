@@ -12,6 +12,8 @@ use app\models\Categorie;
  */
 class CategorieSearch extends Categorie
 {
+    public $image;
+    public $product;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class CategorieSearch extends Categorie
     {
         return [
             [['id', 'parent_id'], 'integer'],
-            [['categorie', 'slug'], 'safe'],
+            [['categorie', 'slug', 'image', 'product'], 'safe'],
         ];
     }
 
@@ -57,6 +59,17 @@ class CategorieSearch extends Categorie
             return $dataProvider;
         }
 
+        $query->joinWith('products');
+        $dataProvider->sort->attributes['image'] = [
+            'asc' => ['product.image' => SORT_ASC],
+            'desc' => ['product.image' => SORT_DESC],
+        ];
+        $query->joinWith('products');
+        $dataProvider->sort->attributes['product'] = [
+            'asc' => ['product.product' => SORT_ASC],
+            'desc' => ['product.product' => SORT_DESC],
+        ];
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -64,7 +77,9 @@ class CategorieSearch extends Categorie
         ]);
 
         $query->andFilterWhere(['like', 'categorie', $this->categorie])
-            ->andFilterWhere(['like', 'slug', $this->slug]);
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'product.image', $this->image])
+            ->andFilterWhere(['like', 'product.product', $this->product]);
 
         return $dataProvider;
     }

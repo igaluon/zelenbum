@@ -3,11 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model app\models\Categorie */
 
-$this->title = 'Все продукты';
+$this->title = 'Товары ';
 $this->params['breadcrumbs'][] = $this->title;
 
 \yii::$app->session->set('name', '');
@@ -21,18 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Новая категория', ['create-categorie'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Новый товар', ['product/create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            [
-                'attribute' => 'id',
-                'format' => 'integer',
-                'label' => 'ID',
-            ],
+//            [
+//                'attribute' => 'categorie_id',
+//                'format' => 'integer',
+//                'label' => 'ID',
+//            ],
             [
                 'label' => 'Картинка',
                 'format' => 'raw',
@@ -45,22 +49,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'categorie',
-                'format' => 'text',
                 'label' => 'Категория',
                 'value' => 'categorie.categorie',
+                'format' =>'raw',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Categorie::find()->all(), 'categorie', 'categorie')
             ],
 //            [
-//                'label' => 'Категория',
+//
+//                'attribute' => 'product',
 //                'format' => 'text',
-//                'value' => function($data){
-//                       return \app\models\Categorie::getCategor($data->categorie_id);
-//                       },
+//                'label' => 'Название товара',
 //            ],
             [
-
                 'attribute' => 'product',
-                'format' => 'text',
+                'format' => 'raw',
+                'value' => 'product',
                 'label' => 'Название товара',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'product', 'product')
             ],
             [
 

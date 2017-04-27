@@ -37,7 +37,7 @@ use app\models\Category;
                 'options' => ['class' => 'sidebar-menu'],
 
                 'items' => [
-                    ['label' => 'Все категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
+                    ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
 
                     ['label' => 'Категории',
 

@@ -9,6 +9,7 @@ use dmstr\widgets\Alert;
     <section class="content">
 
         <?= $content ?>
+
     </section>
 </div>
 

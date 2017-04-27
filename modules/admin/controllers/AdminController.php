@@ -63,19 +63,17 @@ class AdminController extends Controller
     public function actionIndex()
     {
 
+        $name = '';
+
         if (!Yii::$app->user->isGuest) {
 
-//            $categorie = Product::find()->with([
-//                'categorie' => function ($query) {
-//                        $query->andWhere(['id' => 4]);
-//                    },
-//            ])->all();
             $searchModel = new ProductSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'name' => $name,
             ]);
         }
 
@@ -110,9 +108,7 @@ class AdminController extends Controller
     public function actionEdit()
     {
 
-        $name = \yii::$app->request->get('id');
-
-//        $model_category = $this->findCategorieModel($name);
+        $name = \yii::$app->request->get('categorie.categorie');
 
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -134,10 +130,14 @@ class AdminController extends Controller
 
     public function actionUpdate($id)
     {
+        if ($id == 0) {
+            $this->redirect(['index']);
+        }
 
         $model = $this->findModel($id);
         // получаем пост-данные
         if ($model->load( Yii::$app->request->post()) ) {
+            var_dump($model->load( Yii::$app->request->post()));die;
             // получаем картинку из формы, если она выбрана
             $model->images = UploadedFile::getInstance($model, 'images');
             // если картинка существует - загружаем новую
@@ -149,7 +149,6 @@ class AdminController extends Controller
                 if ($model->validate()) {
                     // загружаем новую картинку в нужную директорию
                     $path = Yii::getAlias("@app/web/uploads/" . $model->categorie_id);
-                    var_dump($path);die;
                     $extens = time() .'.' .$model->images->extension;
                     $model->images->saveAs($path .DIRECTORY_SEPARATOR .$extens);
 
@@ -201,7 +200,7 @@ class AdminController extends Controller
      * @param int $id id of the parent category
      * @return mixed
      */
-    public function actionCreate($id = null)
+    public function actionCreateCategorie($id = null)
     {
         $categories = Categorie::find()->all();
         $model = new Categorie();
@@ -227,7 +226,7 @@ class AdminController extends Controller
 
         $model = $this->findModel($id);
 
-        \yii::$app->session->set('name', $model->category_name);
+        \yii::$app->session->set('name', $model->categorie_id);
 
         if (is_file($model->image)) {
         unlink($model->image);
@@ -282,19 +281,24 @@ class AdminController extends Controller
     {
 
         if(Yii::$app->request->isPost){
-            // Получаем картинки через метод-post
+            // Получаем категорию через метод-post
             $name_category = Yii::$app->request->post('name');
 
             // Создаем путь для загрузки картинки
             $path = Yii::getAlias("@app/web/uploads/" . $name_category);
+
             // Создаем директорию для загрузки картинки
             BaseFileHelper::createDirectory($path, 0755, true);
+
             // Достаем картинку из формы
             $file = UploadedFile::getInstanceByName('images');
+
             // Меняем название картинки для защиты от кирилицы
             $extens = time().'.'.$file->extension;
+
             // Загружаем картинку в нужную директорию
             $file->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+
 //            $file->saveAs($path .DIRECTORY_SEPARATOR .$file);
 
             // Изменение размера картинки на нужный нам
@@ -321,7 +325,7 @@ class AdminController extends Controller
             $product = new Product();
 
             $product->attributes = $values;
-            $product->save();
+            $product->save(false);
 
             sleep(1);
             return true;

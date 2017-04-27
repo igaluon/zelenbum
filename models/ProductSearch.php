@@ -46,7 +46,6 @@ class ProductSearch extends Product
     public function search($params)
     {
         $query = Product::find();
-//        $query = Product::find()->with('categorie')->where(['id' => $this->categorie_id])->one();
 
         // add conditions that should always apply here
 
@@ -55,7 +54,7 @@ class ProductSearch extends Product
         ]);
 
         $this->load($params);
-
+//var_dump($params);die;
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
