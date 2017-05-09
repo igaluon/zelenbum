@@ -6,12 +6,16 @@
                     <div class="grid_12">
                         <!-- header -->
                         <header>
-                            <h1><a href="/">Зеленбум - Все для красивой усадьбы</a></h1>
+                            <h1 >
+                                <a href="/">
+                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" alt="Зеленбум - Все для красивой усадьбы" />
+                                </a>
+                            </h1>
                             <div class="menu-search">
                                 <!-- menu -->
                                 <nav>
                                     <?php echo yii\widgets\Menu::widget([
-                                         'items' =>   [
+                                        'items' =>   [
                                             ['label' => 'О нас', 'url' => ['site/index']],
                                             ['label' => 'Ассортимент',
                                                 'options'=>['class'=>'dropdown'],
