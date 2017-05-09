@@ -7,6 +7,7 @@ use app\models\Categorie;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
+use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,7 +20,6 @@ use yii\web\UploadedFile;
 class ProductController extends Controller
 {
     public $layout = 'admin/main';
-//    public $layout = '//modules/admin/admin/layuots/main';
 
     /**
      * @inheritdoc
@@ -33,6 +33,16 @@ class ProductController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'controllers' => ['admin/product'],
+                        'allow' => true,
+                        'roles' => ['@'] // авторизованные доступ ко всей админке
+                    ],
+                ]
+            ],
         ];
     }
 
@@ -45,6 +55,7 @@ class ProductController extends Controller
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -52,45 +63,39 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Product model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Product model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-
         $product = new Product();
 
+        // Получаем категорию через метод-post
         if ($product->load( Yii::$app->request->post()) ) {
 
-            // Получаем категорию через метод-post
-var_dump($product->categorie);die;
             // Создаем путь для загрузки картинки
-            $path = Yii::getAlias("@app/web/uploads/" . $product['Product']['categorie']);
+            $path = Yii::getAlias("@app/web/uploads/");
 
             // Создаем директорию для загрузки картинки
             BaseFileHelper::createDirectory($path, 0755, true);
 
             // Достаем картинку из формы
-            $file = UploadedFile::getInstanceByName($product['Product']['images']);
-var_dump($file);die;
-            // Меняем название картинки для защиты от кирилицы
-            $extens = time().'.'.$file->extension;
+            $product->images = UploadedFile::getInstance($product, 'images');
 
-            // Загружаем картинку в нужную директорию
-            $file->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+            // Если картинка не выбрана - сохраняем остальные поля в базу и редирект на index
+            if ($product->images == null) {
+
+                $product->save();
+
+                return $this->redirect(['index']);
+
+            }
+
+            // Меняем название картинки для защиты от кирилицы
+            $extens = time() .'.' .$product->images->extension;
+            // Загружаем картинку
+            $product->images->saveAs($path .DIRECTORY_SEPARATOR .$extens);
 
             // Изменение размера картинки на нужный нам
             // -----------------------------------------
@@ -110,13 +115,17 @@ var_dump($file);die;
             // Сохраняем все данные в базу
 
             $values = [
-                'image' => 'uploads/' .$product->categorie_id .DIRECTORY_SEPARATOR .$extens,
+                'image' => 'uploads' .DIRECTORY_SEPARATOR .$extens,
+                'product' => $product->product,
+                'description' => $product->description,
+                'categorie_id' => $product->categorie_id,
             ];
 
             $product->attributes = $values;
             $product->save(false);
 
-            return $this->redirect(['view', 'id' => $product->id]);
+            // Если все удачно - редирект на index
+            return $this->redirect(['index']);
 
         } else {
 
@@ -137,13 +146,91 @@ var_dump($file);die;
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $product = $this->findModel($id);
+
+        // Получаем категорию через метод-post
+        if ($product->load( Yii::$app->request->post()) ) {
+
+            // Создаем путь для загрузки картинки
+            $path = Yii::getAlias("@app/web/uploads");
+
+            // Создаем директорию для загрузки картинки
+            BaseFileHelper::createDirectory($path, 0755, true);
+
+            // Достаем картинку из формы
+            $product->images = UploadedFile::getInstance($product, 'images');
+
+            // Если картинка не выбрана - сохраняем остальные поля в базу и редирект на index
+            if ($product->images == null) {
+
+                $product->save();
+
+                return $this->redirect(['index']);
+
+            }
+                // Меняем название картинки для защиты от кирилицы
+            $extens = time() .'.' .$product->images->extension;
+            // Загружаем картинку
+            $product->images->saveAs($path .DIRECTORY_SEPARATOR .$extens);
+
+            // Изменение размера картинки на нужный нам
+            // -----------------------------------------
+            // Получаем картинку из директории
+            $image = $path .DIRECTORY_SEPARATOR .$extens;
+            // Даем новое имя
+            $new_name = $path .DIRECTORY_SEPARATOR .$extens;
+
+            // Создаем экземпляр класса ImageResize
+            $imageresize = new ImageResize();
+
+            // Вызываем метод imageresize и задаем размеры картинки
+            $imageresize::imageresize($image, $new_name, 220, 300);
+
+            // -----------------------------------------
+
+            // Сохраняем все данные в базу
+
+            $values = [
+                'image' => 'uploads' .DIRECTORY_SEPARATOR .$extens,
+                'product' => $product->product,
+                'description' => $product->description,
+                'categorie_id' => $product->categorie_id,
+            ];
+
+            $product->attributes = $values;
+            $product->save(false);
+
+            // Если все удачно - редирект на index
+            return $this->redirect(['index']);
+        } else {
+
+            $categories = Categorie::find()->all();
+
+            return $this->render('update', [
+                'model' => $product,
+                'categories' => $categories,
+            ]);
+        }
+    }
+
+    /**
+     * Creates a new Category model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param int $id id of the parent category
+     * @return mixed
+     */
+    public function actionCategorie($id = null)
+    {
+        $categories = Categorie::find()->all();
+        $model = new Categorie();
+        $model->parent_id = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
+            return $this->render('_create', [
                 'model' => $model,
+                'categories' => $categories,
             ]);
         }
     }
@@ -156,9 +243,16 @@ var_dump($file);die;
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (is_file($model->image)) {
+            unlink($model->image);
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**

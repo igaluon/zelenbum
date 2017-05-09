@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
+
 
 /**
  * This is the model class for table "categorie".
@@ -24,6 +26,16 @@ class Categorie extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'categorie';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => ['categorie'],
+            ]
+        ];
     }
 
     /**
@@ -48,7 +60,7 @@ class Categorie extends \yii\db\ActiveRecord
             'id' => 'ID',
             'categorie' => 'Категория',
             'slug' => 'Slug',
-            'parent_id' => 'Parent ID',
+                'parent_id' => 'Родительская',
         ];
     }
 
@@ -97,7 +109,7 @@ class Categorie extends \yii\db\ActiveRecord
      * @param int $parent
      * @return array
      */
-    private function getMenuItems($categories, $activeId = null, $parent = null)
+    private static function getMenuItems($categories, $activeId = null, $parent = null)
     {
         $menuItems = [];
         foreach ($categories as $category) {
@@ -107,35 +119,14 @@ class Categorie extends \yii\db\ActiveRecord
 //                    'active' => true,
                     'label' => $category->categorie,
 //                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
-                    'url' => $category->parent_id === $parent ? ['edit', 'id' => $category->categorie] : '#',
-//                    'url' => ['catalog/list', 'id' => $category->id],
+//                    'url' => isset($category->parent_id) ? ['site/product', 'id' => $category->id, 'name' => $category->categorie] : '#',
+                    'url' => ['site/product', 'id' => $category->id, 'name' => $category->categorie],
                     'items' => static::getMenuItems($categories, $activeId, $category->id),
                 ];
             }
         }
 
         return $menuItems;
-    }
-
-    /**
-     * Returns IDs of category and all its sub-categories
-     *
-     * @param Categorie[] $categories all categories
-     * @param int $categoryId id of category to start search with
-     * @param array $categoryIds
-     * @return array $categoryIds
-     */
-    private function getCategoryIds($categories, $categoryId, &$categoryIds = [])
-    {
-        foreach ($categories as $category) {
-            if ($category->id == $categoryId) {
-                $categoryIds[] = $category->id;
-            }
-            elseif ($category->parent_id == $categoryId){
-                $this->getCategoryIds($categories, $category->id, $categoryIds);
-            }
-        }
-        return $categoryIds;
     }
 
     /**
@@ -169,7 +160,7 @@ class Categorie extends \yii\db\ActiveRecord
 //                    'active' => true,
                     'label' => $category->categorie,
 //                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
-                    'url' => $category->parent_id === $parent ? ['category', 'id' => $category->id] : '#',
+                    'url' => ['category', 'id' => $category->id],
 //                    'url' => ['catalog/list', 'id' => $category->id],
                     'items' => static::getAdminMenuItems($categories, $activeId, $category->id),
 
@@ -182,24 +173,4 @@ class Categorie extends \yii\db\ActiveRecord
         return $menuItems;
     }
 
-    /**
-     * Returns IDs of category and all its sub-categories
-     *
-     * @param Categorie[] $categories all categories
-     * @param int $categoryId id of category to start search with
-     * @param array $categoryIds
-     * @return array $categoryIds
-     */
-    private function getAdminCategoryIds($categories, $categoryId, &$categoryIds = [])
-    {
-        foreach ($categories as $category) {
-            if ($category->id == $categoryId) {
-                $categoryIds[] = $category->id;
-            }
-            elseif ($category->parent_id == $categoryId){
-                $this->getAdminCategoryIds($categories, $category->id, $categoryIds);
-            }
-        }
-        return $categoryIds;
-    }
 }

@@ -1,20 +1,22 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\Categorys;
-use app\models\CategorysSearch;
+use app\models\Categorie;
+use app\models\CategorieSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategorysController implements the CRUD actions for Categorys model.
+ * CategorieController implements the CRUD actions for Categorie model.
  */
-class CategorysController extends Controller
+class CategorieController extends Controller
 {
-    public $layout = 'default';
+    public $layout = 'admin/main';
+
     /**
      * @inheritdoc
      */
@@ -27,16 +29,26 @@ class CategorysController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'controllers' => ['admin/categorie'],
+                        'allow' => true,
+                        'roles' => ['@'] // авторизованные доступ ко всей админке
+                    ],
+                ]
+            ],
         ];
     }
 
     /**
-     * Lists all Categorys models.
+     * Lists all Categorie models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategorysSearch();
+        $searchModel = new CategorieSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +58,7 @@ class CategorysController extends Controller
     }
 
     /**
-     * Displays a single Categorys model.
+     * Displays a single Categorie model.
      * @param integer $id
      * @return mixed
      */
@@ -58,19 +70,18 @@ class CategorysController extends Controller
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new Categorie model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param int $id id of the parent category
      * @return mixed
      */
     public function actionCreate($id = null)
     {
-        $categories = Categorys::find()->all();
-        $model = new Categorys();
+        $categories = Categorie::find()->all();
+        $model = new Categorie();
         $model->parent_id = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -80,7 +91,7 @@ class CategorysController extends Controller
     }
 
     /**
-     * Updates an existing Categorys model.
+     * Updates an existing Categorie model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -99,7 +110,7 @@ class CategorysController extends Controller
     }
 
     /**
-     * Deletes an existing Categorys model.
+     * Deletes an existing Categorie model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,15 +123,15 @@ class CategorysController extends Controller
     }
 
     /**
-     * Finds the Categorys model based on its primary key value.
+     * Finds the Categorie model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Categorys the loaded model
+     * @return Categorie the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Categorys::findOne($id)) !== null) {
+        if (($model = Categorie::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

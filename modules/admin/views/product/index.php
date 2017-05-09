@@ -2,37 +2,64 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Новый товар', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'categorie_id',
-            'product',
-            'slug',
+            [
+                'label' => 'Картинка',
+                'format' => 'raw',
+                'value' => function($data){
+                        return Html::img(\yii\helpers\Url::toRoute('../' .$data->image),[
+                            'alt'=>'Картинка',
+                            'style' => 'width:100px;'
+                        ]);
+                    },
+            ],
+            [
+                'attribute' => 'categorie_id',
+                'label' => 'Категория',
+                'value' => function ($model) {
+                        return $model->categorie->categorie;
+                    },
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Categorie::find()->all(), 'id', 'categorie')
+
+            ],
+            [
+                'attribute' => 'product',
+                'format' => 'raw',
+                'value' => 'product',
+                'label' => 'Название товара',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'product', 'product')
+            ],
             'description:ntext',
-            // 'image',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

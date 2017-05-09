@@ -1,4 +1,17 @@
+<?php
 
+//echo "PHP: " . PHP_VERSION . "\n";
+//echo "ICU: " . INTL_ICU_VERSION . "\n";
+
+//echo \notgosu\yii2\modules\metaTag\widgets\metaTagForm\Widget::widget(['model' => $model]);
+
+//foreach ($model->metaTags as $i => $data) {
+//    echo $this->registerMetaTag(['name' => $data->metaTag->name, 'content' => $data->metaTag->description]);
+//}
+// echo $this->registerMetaTag(['name' => $metatag->metaTag->name, 'content' => Yii::t('app', 'ЦФГЧЙКлкйчгжбнм')]);
+ \notgosu\yii2\modules\metaTag\components\MetaTagRegister::register($model, Yii::$app->language);
+
+?>
 
 <div class="clear"></div>
 <div class="grid_12 rt-indent-bottom-1">

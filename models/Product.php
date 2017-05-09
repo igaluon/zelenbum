@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\behaviors\SluggableBehavior;
+
 
 /**
  * This is the model class for table "product".
@@ -18,13 +20,28 @@ use yii\db\ActiveRecord;
 class Product extends ActiveRecord
 {
     public $images;
-    public $categorie;
+
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'product';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => ['product'],
+            ],
+            'seo' => [
+                'class' => \notgosu\yii2\modules\metaTag\components\MetaTagBehavior::className(),
+                'languages' => ['ru'],
+            ]
+        ];
     }
 
     /**
@@ -53,6 +70,7 @@ class Product extends ActiveRecord
             'slug' => 'Slug',
             'description' => 'Описание',
             'image' => 'Image',
+            'images' => 'Картинка',
         ];
     }
 

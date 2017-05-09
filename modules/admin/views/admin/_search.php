@@ -22,10 +22,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'image') ?>
 
-    <?= $form->field($model, 'category') ?>
+    <?= $form->field($model, 'categorie') ?>
 
 
-    <?php  echo $form->field($model, 'product_name') ?>
+    <?php  echo $form->field($model, 'product') ?>
 
     <?php  echo $form->field($model, 'description') ?>
 

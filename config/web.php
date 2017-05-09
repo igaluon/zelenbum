@@ -12,10 +12,7 @@ $config = [
             'class' => 'app\modules\admin\Module',
         ],
         'seo' => [
-            'class' => 'app\modules\seo\Module',
-        ],
-        'category' => [
-            'class' => 'app\modules\category\Module',
+            'class' => \notgosu\yii2\modules\metaTag\Module::className(),
         ],
     ],
     'components' => [
@@ -29,7 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => 'login',
+            'loginUrl' => '/web/admin/admin/login',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -56,9 +53,8 @@ $config = [
             'showScriptName' => false,
             'rules' => [
 //                'view-category/<name:\*>' => 'admin/category',
-                'admin' => 'admin/admin',
+                'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
-                'login' => 'admin/admin/login',
             ],
         ],
     ],

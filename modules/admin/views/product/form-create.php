@@ -15,9 +15,9 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map($categories, 'id', 'title'), ['prompt' => 'Root']) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map($categories, 'id', 'categorie'), ['prompt' => 'Root']) ?>
 
-    <?= $form->field($model, 'cat5egorie')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'categorie')->textInput(['maxlength' => 255]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

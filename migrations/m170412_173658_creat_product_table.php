@@ -15,12 +15,12 @@ class m170412_173658_creat_product_table extends Migration
             'id' => $this->primaryKey(),
             'categorie_id' => $this->integer(),
             'product' => $this->string()->notNull(),
-            'slug' => $this->string(),
+            'slug' => $this->string()->notNull(),
             'description' => $this->text(),
             'image' => $this->string()->notNull(),
 
         ], $tableOptions);
-        $this->addForeignKey('fk-product-categorie_id-categorie-id', '{{%product}}', 'categorie_id', '{{%categorie}}', 'id', 'RESTRICT');
+        $this->addForeignKey('fk-product-categorie_id-categorie-id', '{{%product}}', 'categorie_id', '{{%categorie}}', 'id', 'CASCADE');
 
     }
 

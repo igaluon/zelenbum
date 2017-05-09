@@ -39,13 +39,17 @@ use app\models\Category;
                 'items' => [
                     ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
 
-                    ['label' => 'Категории',
+                    ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/categorie']],
 
-//                         'items' =>  Category::CategoryMenu()],
-                         'items' =>  app\models\Categorie::menuAdminItems()],
+//                    ['label' => 'Категории',
+//
+////                         'items' =>  Category::CategoryMenu()],
+//                         'items' =>  app\models\Categorie::menuAdminItems()],
 
-                    ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => ['../admin/tag']],
+                    ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => ['../seo/tag']],
                 ],
+                'activeCssClass' => 'active',
+                'activateParents' => true,
             ]
         ) ?>
 

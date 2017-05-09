@@ -2,7 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Categorys;
+use app\models\Categorie;
+use app\models\Category;
 use app\models\Product;
 use app\models\User;
 use Yii;
@@ -21,7 +22,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new Product();
+
+        return $this->render('index', ['model' => $model]);
     }
 
     /**
@@ -32,38 +35,23 @@ class SiteController extends Controller
         return $this->render('error');
     }
 
+
     /**
      * @return string
      */
-    public function actionProducts()
+    public function actionProduct($id,$name)
     {
         $this->layout = 'products';
 
-        $id = Yii::$app->request->get('id');
-        $name = Yii::$app->request->get('name');
-//        \Yii::$app->params['some_value' => $name];
-        \yii::$app->cache->set('name', $name);
+        $metatag = new Category();
 
-        $model = Product::findAll(['category_name' => $id]);
+        $model = Product::findAll(['categorie_id' => $id]);
 
-        return $this->render('products', ['model' => $model, 'name' =>$name]);
-    }
-    public function actionProduct()
-    {
-        $this->layout = 'products';
-
-        $id = Yii::$app->request->get('id');
-        $name = Yii::$app->request->get('name');
-//        \Yii::$app->params['some_value' => $name];
-        \yii::$app->cache->set('name', $name);
-
-        $model = Product::findAll(['category_name' => $id]);
-
-        return $this->render('products', ['model' => $model, 'name' =>$name]);
+        return $this->render('products', ['model' => $model, 'name' => $name, 'metatag' => $metatag]);
     }
 
     /**
-     * @param Categorys[] $categories
+     * @param Categorie[] $categories
      * @param int $activeId
      * @param int $parent
      * @return array
@@ -87,7 +75,7 @@ class SiteController extends Controller
     /**
      * Returns IDs of category and all its sub-categories
      *
-     * @param Categorys[] $categories all categories
+     * @param Categorie[] $categories all categories
      * @param int $categoryId id of category to start search with
      * @param array $categoryIds
      * @return array $categoryIds
@@ -139,7 +127,7 @@ class SiteController extends Controller
         Yii::setAlias('@frontendWebroot', Yii::$app->request->baseUrl);
         $url = Yii::getAlias('@frontendWebroot');
         echo Yii::getAlias('@frontendWebroot');
-        echo 'drfgtyhjk';
+        echo $url;
     }
     public function actionOurWorks()
     {

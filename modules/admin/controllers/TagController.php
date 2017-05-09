@@ -34,7 +34,7 @@ class TagController extends Controller
                         'controllers' => ['admin/admin'],
                         'actions' => ['login'],
                         'verbs' => ['GET', 'POST'],
-                        'roles' => ['?']
+                        'roles' => ['?'] // неавторизованные доступ только к логину
                     ],
                 ]
             ],

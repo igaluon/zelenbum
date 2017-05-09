@@ -8,7 +8,6 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $model app\models\Categorie */
 
 $this->title = 'Товары ';
 $this->params['breadcrumbs'][] = $this->title;
@@ -48,11 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
             ],
             [
-                'attribute' => 'categorie',
+                'attribute' => 'categorie_id',
                 'label' => 'Категория',
-                'value' => 'categorie.categorie',
-                'format' =>'raw',
-                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Categorie::find()->all(), 'categorie', 'categorie')
+                'value' => function ($model) {
+                    return $model->categorie->categorie;
+                },
+//                'value' => 'categorie',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Categorie::find()->all(), 'id', 'categorie')
             ],
 //            [
 //
@@ -70,13 +71,24 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 
                 'attribute' => 'description',
-                'format' => 'text',
+                'format' => 'ntext',
                 'label' => 'Описание',
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
+                'buttons' => [
+//                    'delete' => function ($url,$model) {
+//                            return Html::a(
+//                                '<span class="glyphicon glyphicon-screenshot"></span>',
+//                                ['product/delete', 'id' => $model->id]);
+//                        },
+//                    'link' => function ($url,$model,$key) {
+//                            return Html::a('Действие', ['/product/delete']);
+//                        },
+                ],
             ],
+
         ],
     ]); ?>
     <?php Pjax::end(); ?>

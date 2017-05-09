@@ -55,30 +55,6 @@ class AdminController extends Controller
         ];
     }
 
-    /**
-     * Индексная страница - вывод всех категорий и товаров
-     * @param integer $id
-     * @return string
-     */
-    public function actionIndex()
-    {
-
-        $name = '';
-
-        if (!Yii::$app->user->isGuest) {
-
-            $searchModel = new ProductSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'name' => $name,
-            ]);
-        }
-
-        return $this->redirect('login');
-    }
 
     /**
      * Вход в админку
@@ -90,7 +66,7 @@ class AdminController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
-            $this->redirect('admin');
+            $this->redirect('/web/admin/product');
 
         }
 
@@ -137,10 +113,9 @@ class AdminController extends Controller
         $model = $this->findModel($id);
         // получаем пост-данные
         if ($model->load( Yii::$app->request->post()) ) {
-            var_dump($model->load( Yii::$app->request->post()));die;
             // получаем картинку из формы, если она выбрана
             $model->images = UploadedFile::getInstance($model, 'images');
-            // если картинка существует - загружаем новую
+            // если картинка существует - загружаем ее
             if($model->images) {
                 // если есть предидущая картинка - удаляем ее
                 if($model->image) {
@@ -226,7 +201,7 @@ class AdminController extends Controller
 
         $model = $this->findModel($id);
 
-        \yii::$app->session->set('name', $model->categorie_id);
+//        \yii::$app->session->set('name', $model->categorie_id);
 
         if (is_file($model->image)) {
         unlink($model->image);
@@ -234,10 +209,10 @@ class AdminController extends Controller
 
         $model->delete();
 
-        if (\yii::$app->session->get('name')) {
-            $name = \yii::$app->request->get('name');
-           return $this->redirect(['edit', 'name'=> \yii::$app->session->get('name')]);
-        }
+//        if (\yii::$app->session->get('name')) {
+//            $name = \yii::$app->request->get('name');
+//           return $this->redirect(['edit', 'name'=> \yii::$app->session->get('name')]);
+//        }
 
         return $this->redirect(['index']);
     }
@@ -343,6 +318,7 @@ class AdminController extends Controller
 
         \Yii::$app->user->logout();
         return $this->goBack();
+//        return $this->redirect('admin/login');
     }
 
     /**
