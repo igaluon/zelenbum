@@ -1,8 +1,3 @@
-<?php
-
-use app\models\Category;
-
-?>
 
 
 <aside class="main-sidebar">
@@ -20,7 +15,7 @@ use app\models\Category;
             </div>
         </div>
 
-        <!-- search form -->
+       <!--  search form -->
 <!--        <form action="#" method="get" class="sidebar-form">-->
 <!--            <div class="input-group">-->
 <!--                <input type="text" name="q" class="form-control" placeholder="Search..."/>-->
@@ -30,15 +25,14 @@ use app\models\Category;
 <!--              </span>-->
 <!--            </div>-->
 <!--        </form>-->
-        <!-- /.search form -->
+       <!--  /.search  -->
 
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu'],
 
                 'items' => [
-                    ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
-
+                    ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
                     ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/categorie']],
 
 //                    ['label' => 'Категории',
@@ -46,7 +40,9 @@ use app\models\Category;
 ////                         'items' =>  Category::CategoryMenu()],
 //                         'items' =>  app\models\Categorie::menuAdminItems()],
 
-                    ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => ['../seo/tag']],
+                    ['label' => 'Заказы', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/order']],
+                    ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => ['/seo/tag']],
+
                 ],
                 'activeCssClass' => 'active',
                 'activateParents' => true,

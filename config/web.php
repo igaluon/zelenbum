@@ -28,6 +28,9 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => '/web/admin/admin/login',
         ],
+        'cart' => [
+            'class' => 'yz\shoppingcart\ShoppingCart',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

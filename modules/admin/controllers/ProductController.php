@@ -37,8 +37,8 @@ class ProductController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'controllers' => ['admin/product'],
                         'allow' => true,
+                        'controllers' => ['admin/product'],
                         'roles' => ['@'] // авторизованные доступ ко всей админке
                     ],
                 ]

@@ -3,13 +3,13 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AdminAsset;
+use app\assets\CartAsset;
 
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AdminAsset::register($this);
+CartAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

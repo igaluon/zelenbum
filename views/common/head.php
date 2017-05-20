@@ -8,12 +8,13 @@
                         <header>
                             <h1 >
                                 <a href="/">
-                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" alt="Зеленбум - Все для красивой усадьбы" />
+                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" width="150px" height="75px" alt="Зеленбум - Все для красивой усадьбы" />
                                 </a>
                             </h1>
                             <div class="menu-search">
                                 <!-- menu -->
                                 <nav>
+                                    <?php $itemsInCart = Yii::$app->cart->getCount(); ?>
                                     <?php echo yii\widgets\Menu::widget([
                                         'items' =>   [
                                             ['label' => 'О нас', 'url' => ['site/index']],
@@ -23,6 +24,8 @@
                                             ],
                                             ['label' => 'Наши работы', 'url' => ['site/our-works']],
                                             ['label' => 'Контакты', 'url' => ['site/contacts']],
+                                            ['label' => 'Корзина' . ($itemsInCart ? " ($itemsInCart)" : ''), 'url' => ['/cart/list']],
+
                                         ],
                                         'options' => [
                                             'class' => 'sf-menu sf-js-enabled','data'=>'menu',

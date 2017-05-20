@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
+use yz\shoppingcart\CartPositionInterface;
+use yz\shoppingcart\CartPositionTrait;
 
 
 /**
@@ -13,13 +15,37 @@ use yii\behaviors\SluggableBehavior;
  * @property int $id
  * @property int $categorie_id
  * @property string $product
+ * @property int $price
  * @property string $slug
  * @property string $description
  * @property string $image
  */
-class Product extends ActiveRecord
+class Product extends ActiveRecord implements CartPositionInterface
 {
     public $images;
+
+    use CartPositionTrait;
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Product
+     */
+    public function getProduct()
+    {
+        if ($this->_product === null) {
+            $this->_product = Product::findOne($this->id);
+        }
+        return $this->_product;
+    }
 
 
     /**
@@ -50,7 +76,7 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['categorie_id'], 'integer'],
+            [['categorie_id', 'price'], 'integer'],
             [['product'], 'required'],
             [['description'], 'string'],
             [['product', 'slug', 'image'], 'string', 'max' => 255],
@@ -67,6 +93,7 @@ class Product extends ActiveRecord
             'id' => 'ID',
             'categorie_id' => 'Categorie ID',
             'product' => 'Товар',
+            'price' => 'Цена',
             'slug' => 'Slug',
             'description' => 'Описание',
             'image' => 'Image',

@@ -32,7 +32,9 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
     <?= $form->field($model, 'product')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInputtextarea(['maxlength' => true]) ?>
+    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

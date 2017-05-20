@@ -40,34 +40,4 @@ class Menus extends yii\widgets\Menu
         }
         return $menuItems;
     }
-
-    /**
-     * Returns IDs of category and all its sub-categories
-     *
-     * @param Categorys[] $categories all categories
-     * @param int $categoryId id of category to start search with
-     * @param array $categoryIds
-     * @return array $categoryIds
-     */
-    private function getCategoryIds($categories, $categoryId, &$categoryIds = [])
-    {
-        foreach ($categories as $category) {
-            if ($category->id == $categoryId) {
-                $categoryIds[] = $category->id;
-            }
-            elseif ($category->parent_id == $categoryId){
-                $this->getCategoryIds($categories, $category->id, $categoryIds);
-            }
-        }
-        return $categoryIds;
-    }
-
-//        $model = new Product;
-//        $name = \yii::$app->cache->get('name');
-////        $getname =  $model->getCat($name);
-////        var_dump($getname);die;
-////        $getname =  $getname->category_name;
-//        $model = $model->findOne(10);
-//        return $this->render('menu', ['model' => $model]);
-//    }
 }

@@ -10,7 +10,7 @@
 					notRequiredCl:'notRequired',
 					successCl:'success',
 					successShow:'4000',
-					mailHandlerURL:'bat/MailHandler.php',
+					mailHandlerURL:'phpmailer',
 					ownerEmail:'support@guardlex.com',
 					stripHTML:true,
 					smtpMailServer:'localhost',
@@ -18,7 +18,7 @@
 					controls:'a[data-type=reset],a[data-type=submit]',
 					validate:true,
 					rx:{
-						".name":{rx:/^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/,target:'input'},
+						".name":{rx:/^[а-яА-Я'][а-яА-Я-' ]+[а-яА-Я']?$/,target:'input'},
 						".state":{rx:/^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/,target:'input'},
 						".email":{rx:/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,target:'input'},
 						".phone":{rx:/^\+?(\d[\d\-\+\(\) ]{5,}\d$)/,target:'input'},
@@ -105,10 +105,7 @@
 									name:_.getValFromLabel($('.name',_.form)),
 									email:_.getValFromLabel($('.email',_.form)),
 									phone:_.getValFromLabel($('.phone',_.form)),
-									fax:_.getValFromLabel($('.fax',_.form)),
-									state:_.getValFromLabel($('.state',_.form)),
 									message:_.getValFromLabel($('.message',_.form)),
-									owner_email:_.ownerEmail,
 									stripHTML:_.stripHTML
 								},
 								success: function(){

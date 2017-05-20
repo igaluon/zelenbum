@@ -45,16 +45,6 @@ ul.sf-menu li li li.sfHover ul {
 	left: 10em; /* match ul width */
 	top: 0;
 }
-.sf-menu > li.dropdown {
-    font: 14px/20px 'Alice', serif;
-    color: #77a081;
-    padding: 7px 10px;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-.sf-menu > li.dropdown li{
-    font: 12px/13px Arial, sans-serif;
-}
 
 /*** STYLIZATION ***/
 nav {float:left;}
@@ -65,12 +55,19 @@ nav {float:left;}
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
+.sf-menu > li.dropdown {
+    font: 14px/20px 'Alice', serif;
+    color: #77a081;
+    padding: 7px 10px;
+    text-transform: uppercase;
+}
 .sf-menu > li > a {
 	font: 14px/20px 'Alice', serif;
 	color: #77a081;
 	padding: 7px 10px;
 	text-transform: uppercase;
 }
+
 .sf-menu > li > a:hover, .sf-menu > li.active > a, .sf-menu > li.sfHover > a {
 	color: #b0cfb8;
 }
@@ -128,9 +125,9 @@ nav {float:left;}
 	.sf-menu{float:none;}
 	.sf-menu ul,.sf-menu ul ul {min-width:100%;position: relative; left: 0 !important; top:0px !important; padding:0;background:none;}
 	.sf-menu li {float:none; margin:0; margin-bottom:4px;}
-
+	
 	nav {float:none; margin-bottom:40px;}
-
+	
 	.sf-menu > li {
 		background: #336741; /* Old browsers */
 		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -156,7 +153,7 @@ nav {float:left;}
 	.sf-menu > li > a:hover, .sf-menu > li.active > a, .sf-menu > li.sfHover > a {
 		color: #fff;
 	}
-
+	
 	.sf-sub-indicator {
 		text-indent: -999em;
 		width: 10px;
@@ -173,5 +170,5 @@ nav {float:left;}
 	}
 }
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-
+	
 }

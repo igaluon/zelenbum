@@ -33,6 +33,8 @@
                         <?=yii\helpers\Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
                         <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>
                         <p><?=yii\helpers\Html::encode($value->description)?></p>
+                        <p><?=yii\helpers\Html::encode('Цена : ' .$value->price .'грн')?></p>
+                        <?= \yii\helpers\Html::a('Добавить в корзину', ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
                     </div>
                     <?php } ?>
                   </div>

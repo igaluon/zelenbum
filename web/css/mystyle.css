@@ -1,0 +1,35 @@
+.menu-search {
+    float: right;
+    display: block;
+    width: auto;
+    height: 50px;
+}
+.sf-menu > li.dropdown {
+    cursor:pointer;
+}
+.menu-search ul.sf-menu {
+    width:auto;
+    padding: 10px 0;
+    min-width:126px;
+}
+.menu-search ul.sf-menu li li:hover ul,
+.menu-search ul.sf-menu li li.sfHover ul {
+    left: 12em; /* match ul width */
+    top: 0;
+}
+.cart {
+    display: block;
+    margin-top: 86px;
+}
+.sf-menu > li > a {
+    font: 14px/20px 'Alice', serif;
+    color: #77a081;
+    padding: 7px 10px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #2f643d;
+}

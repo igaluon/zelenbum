@@ -3,10 +3,11 @@
 namespace app\controllers;
 
 use app\models\Categorie;
-use app\models\Category;
+use app\models\RegisterMetaTag;
 use app\models\Product;
 use app\models\User;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 
@@ -15,6 +16,16 @@ class SiteController extends Controller
 {
     public $layout = "main";
 
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            Url::remember();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Displays homepage.
      *
@@ -22,7 +33,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = new Product();
+        \Yii::$app->cache->flush();
+
+        $model = new RegisterMetaTag();
 
         return $this->render('index', ['model' => $model]);
     }
@@ -43,7 +56,7 @@ class SiteController extends Controller
     {
         $this->layout = 'products';
 
-        $metatag = new Category();
+        $metatag = new RegisterMetaTag();
 
         $model = Product::findAll(['categorie_id' => $id]);
 

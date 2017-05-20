@@ -18,7 +18,6 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'css/site.less',
         'css/flexslider.less',
 //        'css/forms.less',
         'css/reset.less',
@@ -30,6 +29,7 @@ class AppAsset extends AssetBundle
 
     public $js = [
         'js/jquery-1.7.2.min.js',
+        'js/jquery.responsivemenu.js',
         'js/forms.js',
         'js/jquery.easing.1.3.js',
         'js/jquery.equalheights-rt.js',
