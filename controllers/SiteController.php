@@ -3,9 +3,9 @@
 namespace app\controllers;
 
 use app\models\Categorie;
-use app\models\RegisterMetaTag;
 use app\models\Product;
 use app\models\User;
+use notgosu\yii2\modules\metaTag\components\MetaTagRegister;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -35,7 +35,7 @@ class SiteController extends Controller
     {
         \Yii::$app->cache->flush();
 
-        $model = new RegisterMetaTag();
+        $model = new MetaTagRegister();
 
         return $this->render('index', ['model' => $model]);
     }

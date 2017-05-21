@@ -40,8 +40,6 @@ class m170511_203325_ordre_order_item_table extends Migration
     {
         $this->dropTable('{{%order_item}}');
         $this->dropTable('{{%order}}');
-
-        return false;
     }
 
     /*
