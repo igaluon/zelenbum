@@ -23,7 +23,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <div> <img id="image_preview" src="<?='../../' .$model->image ?>" style="display: block; width: 200px; height: 300px;" alt=""/></div>
+    <div> <img id="image_preview" src="<?='../../' .$model->image ?>" style="display: block; width: 200px; height: 300px; background-color: rgb(230, 228, 228);" alt=""/></div>
     <br>
 
     <?= $form->field($model, 'images')->fileInput() ?>

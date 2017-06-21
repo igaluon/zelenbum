@@ -21,6 +21,10 @@
     display: block;
     margin-top: 86px;
 }
+
+.cart h1{
+    font-size: 21px;
+}
 .sf-menu > li > a {
     font: 14px/20px 'Alice', serif;
     color: #77a081;

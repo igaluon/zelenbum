@@ -7,7 +7,6 @@ use app\assets\AppAsset;
 /* @var $content string */
 
 AppAsset::register($this);
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -25,7 +24,7 @@ AppAsset::register($this);
     <link rel="stylesheet" href="css/ie.css">
     <![endif]-->
 </head>
-<body>
+<body id="page5">
 
 <?php $this->beginBody() ?>
 

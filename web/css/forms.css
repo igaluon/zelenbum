@@ -3,25 +3,30 @@
 #confirm {
 	position: relative;
 	height: auto;
-	padding-bottom: 30px;
+	padding-bottom: 60px;
+    font: 11px/18px Arial, sans-serif;
 }
 #confirm  label {
 	display: block;
 	position: relative;
-	min-height: 52px;
+	min-height: 10px;
 	width: 360px;
+}
+
+#confirm  label.name {
+    min-height: 0;
 }
 #confirm  label.message {
 	min-height: 300px;
 }
 #confirm input {
 	display: block;
-	margin: 0;
+	margin-top: 10px;
 	outline: none;
 	box-shadow: none !important;
 	padding: 0 15px;
-	width: 330px;
-	height: 40px;
+	width: 265px;
+	height: 35px;
 	font: 12px/20px Arial, sans-serif;
 	color: #607766;
 	background: #ebebeb;
@@ -34,7 +39,7 @@
 	resize: none;
 	overflow: auto;
 	display: block;
-	margin: 0;
+	margin-top: 10px;
 	outline: none;
 	box-shadow: none !important;
 	padding: 10px 15px;
@@ -79,9 +84,11 @@
 ========================================================================= */
 dl.adress {
 	display: block;
+    font: 11px/18px Arial, sans-serif;
 }
 dl.adress dt {
 	margin-bottom:20px;
+    margin-top: 15px;
 }
 dl.adress dd {
 	width: 176px;

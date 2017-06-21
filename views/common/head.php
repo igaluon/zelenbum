@@ -6,9 +6,9 @@
                     <div class="grid_12">
                         <!-- header -->
                         <header>
-                            <h1 >
+                            <h1 class="logo">
                                 <a href="/">
-                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" width="150px" height="75px" alt="Зеленбум - Все для красивой усадьбы" />
+                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" width="150px" height="65px" alt="Зеленбум - Все для красивой усадьбы" />
                                 </a>
                             </h1>
                             <div class="menu-search">

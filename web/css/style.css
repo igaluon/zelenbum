@@ -3,13 +3,20 @@
 @import url(http://fonts.googleapis.com/css?family=Emilys+Candy);
 
 html {overflow-y:scroll;}
-body {
+body, #page5 {
 	background: #e1e1e1 url('../images/body-bg.jpg');
 	font:13px/18px Arial, sans-serif;
 	color:#607766;
 	position:relative;
 	min-width:320px;
 }
+/*#page5{*/
+    /*background: #e1e1e1 url('../images/body-bg.jpg');*/
+    /*font:13px/18px Arial, sans-serif;*/
+    /*color:#607766;*/
+    /*position:relative;*/
+    /*min-width:320px;*/
+/*}*/
 html,body {
 	height:100%;
 }
@@ -86,7 +93,7 @@ h1.logo a img{
 }
 
 h2 {
-	font: 400 18px/30px 'Alice', serif;
+	font: 400 15px/30px 'Alice', serif;
 	color:#458154;
 	text-transform:uppercase;
 	letter-spacing:-0.3pt;
@@ -263,12 +270,16 @@ header {
 /* BUTTONS, LINKS
 ========================================================================= */
 .button {
-	display:inline-block;
-	color:#;
-	padding:;
+    margin-left: 20px;
+    font: 14px/22px 'Alice', serif;
+    color: #458154;
+    text-transform: uppercase;
+    border: 0;
+    background: transparent;
+    margin-top: 15px;
 }
 	.button:hover {
-		color:#;
+		color:#58a81d;
 	}
 .link-1 {
 	color:#607766;
@@ -385,7 +396,6 @@ footer {
 	}
 	h1 a {
 		width:200px;
-		background: url('../images/logo-2.png') no-repeat;
 	}
 	.banner-bg {
 		padding: 20px 10px 20px 320px;

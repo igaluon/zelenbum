@@ -56,13 +56,13 @@ nav {float:left;}
 	border-radius: 6px;
 }
 .sf-menu > li.dropdown {
-    font: 14px/20px 'Alice', serif;
+    font: 12px/19px 'Alice', serif;
     color: #77a081;
     padding: 7px 10px;
     text-transform: uppercase;
 }
 .sf-menu > li > a {
-	font: 14px/20px 'Alice', serif;
+	font: 12px/19px 'Alice', serif;
 	color: #77a081;
 	padding: 7px 10px;
 	text-transform: uppercase;

@@ -3,9 +3,11 @@
 namespace app\controllers;
 
 use app\models\Categorie;
+use app\models\ContactForm;
 use app\models\Product;
+use app\models\RegisterMetaTag;
 use app\models\User;
-use notgosu\yii2\modules\metaTag\components\MetaTagRegister;
+use app\component\GoMail;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -35,7 +37,7 @@ class SiteController extends Controller
     {
         \Yii::$app->cache->flush();
 
-        $model = new MetaTagRegister();
+        $model = new RegisterMetaTag();
 
         return $this->render('index', ['model' => $model]);
     }
@@ -52,7 +54,7 @@ class SiteController extends Controller
     /**
      * @return string
      */
-    public function actionProduct($id,$name)
+    public function actionProduct($id)
     {
         $this->layout = 'products';
 
@@ -60,50 +62,40 @@ class SiteController extends Controller
 
         $model = Product::findAll(['categorie_id' => $id]);
 
-        return $this->render('products', ['model' => $model, 'name' => $name, 'metatag' => $metatag]);
+        $category = Categorie::findOne(['id' => $id]);
+
+        return $this->render('products',
+            [
+                'model' => $model,
+                'name' => $category->categorie,
+                'metatag' => $metatag,
+                'id' => $id,
+            ]);
     }
 
-    /**
-     * @param Categorie[] $categories
-     * @param int $activeId
-     * @param int $parent
-     * @return array
-     */
-    private function getMenuItems($categories, $activeId = null, $parent = null)
+    public function actionContacts()
     {
-        $menuItems = [];
-        foreach ($categories as $category) {
-            if ($category->parent_id === $parent) {
-                $menuItems[$category->id] = [
-                    'active' => $activeId === $category->id,
-                    'label' => $category->title,
-                    'url' => ['catalog/list', 'id' => $category->id],
-                    'items' => $this->getMenuItems($categories, $activeId, $category->id),
-                ];
-            }
-        }
-        return $menuItems;
-    }
 
-    /**
-     * Returns IDs of category and all its sub-categories
-     *
-     * @param Categorie[] $categories all categories
-     * @param int $categoryId id of category to start search with
-     * @param array $categoryIds
-     * @return array $categoryIds
-     */
-    private function getCategoryIds($categories, $categoryId, &$categoryIds = [])
-    {
-        foreach ($categories as $category) {
-            if ($category->id == $categoryId) {
-                $categoryIds[] = $category->id;
-            }
-            elseif ($category->parent_id == $categoryId){
-                $this->getCategoryIds($categories, $category->id, $categoryIds);
-            }
-        }
-         return $categoryIds;
+        $this->layout = 'white';
+
+        $model = new ContactForm();
+
+//        if(\yii::$app->request->isAjax){
+
+            if($model->load(\Yii::$app->request->post()) && $model->validate()){
+//                echo 'MOdel Success';
+                $body = " <div>Body: <b> ".$model->body." </b></div>";
+                $body .= " <div>Email: <b> ".$model->email." </b></div>";
+
+                \Yii::$app->gomail->sendMail($model->phone,$body);
+
+                print "Send success";
+            die;
+
+//        }
+       }
+        return $this->render("contact", ['model' => $model]);
+
     }
     /**
  * @ret

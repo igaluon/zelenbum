@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use notgosu\yii2\modules\metaTag\models\MetaTag;
 use Yii;
 use yii\behaviors\SluggableBehavior;
 
@@ -9,9 +10,10 @@ use yii\behaviors\SluggableBehavior;
 /**
  * This is the model class for table "categorie".
  *
+ * @property integer $id
+ * @property int $parent_id
  * @property string $categorie
  * @property string $slug
- * @property int $parent_id
  *
  * @property Categorie $parent
  * @property Categorie[] $categories
@@ -19,7 +21,16 @@ use yii\behaviors\SluggableBehavior;
  */
 class Categorie extends \yii\db\ActiveRecord
 {
-    public $product;
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'categorie',
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -28,17 +39,7 @@ class Categorie extends \yii\db\ActiveRecord
         return 'categorie';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => ['categorie'],
-            ]
-        ];
-    }
-
-    /**
+        /**
      * @inheritdoc
      */
     public function rules()
@@ -60,7 +61,7 @@ class Categorie extends \yii\db\ActiveRecord
             'id' => 'ID',
             'categorie' => 'Категория',
             'slug' => 'Slug',
-                'parent_id' => 'Родительская',
+            'parent_id' => 'Родительская',
         ];
     }
 
@@ -86,6 +87,14 @@ class Categorie extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['categorie_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMetaTag()
+    {
+        return $this->hasMany(MetaTag::className(), ['category_id' => 'id']);
     }
 
     /**
@@ -120,7 +129,7 @@ class Categorie extends \yii\db\ActiveRecord
                     'label' => $category->categorie,
 //                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
 //                    'url' => isset($category->parent_id) ? ['site/product', 'id' => $category->id, 'name' => $category->categorie] : '#',
-                    'url' => ['site/product', 'id' => $category->id, 'name' => $category->categorie],
+                    'url' => ['site/product', 'id' => $category->id, 'name' => $category->slug],
                     'items' => static::getMenuItems($categories, $activeId, $category->id),
                 ];
             }
@@ -160,7 +169,7 @@ class Categorie extends \yii\db\ActiveRecord
 //                    'active' => true,
                     'label' => $category->categorie,
 //                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
-                    'url' => ['category', 'id' => $category->id],
+                    'url' => ['/seo/tag', 'id' => $category->id],
 //                    'url' => ['catalog/list', 'id' => $category->id],
                     'items' => static::getAdminMenuItems($categories, $activeId, $category->id),
 

@@ -19,7 +19,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/flexslider.less',
-//        'css/forms.less',
+        'css/forms.less',
         'css/reset.less',
         'css/skeleton.less',
         'css/style.less',

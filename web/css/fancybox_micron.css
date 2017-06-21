@@ -1,0 +1,42 @@
+
+    .fancyboxes a img, .fancybox img
+    {
+        border: 1px solid #A9A9A9;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        padding: 3px;
+        background-color: #D5D5D5;
+
+        .m-border-radius(3px);
+        .m-gradien(#ffffff, #c4c4c4);
+    }
+
+    .fancyboxes a img:hover, .fancybox img:hover
+    {
+        border: 1px solid #575757;
+        background: #888;
+    }
+
+    .fancyboxes-hover-icon a, .fancybox-hover-icon
+    {
+        position: relative;
+        display: block;
+    }
+
+    .fancyboxes-hover-icon a:before, .fancybox-hover-icon:before
+    {
+        border: none 0;
+        position: absolute;
+        visibility: hidden;
+        margin: 8px 0 0 8px;
+        width: 20px;
+        height: 20px;
+        background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAB8klEQVR42q1VTUtCQRR9CoYl1AOhtOcfqMCNpo+saBH4OzIMceFeQVDwjwj9ASHKaisibgMXgpsINRQXbrLwOd1jd8L8fJAXDtzunHNec+fOqCwIK8FG2CKoBCdD5ZqNOSvDwuRtgkY4IPgJJww/1zTm2KARQijAPDM7YZdwFI1GI6VS6aHZbL6ORiMDQI4a1sBhrp1NZ8w2CfuEYKFQuP2iIBNhGIYYDofAOEcNa+CAC400nTTbILjcbvd5o9F4gQgG9Xq9mMvlblRVPQOQo4Y1cMCFhrR78JCmVm62t1KpFEHs9/utfD6fpprOffMBnOtYAwfccrl8Dy1hZ+zFzp5EIhEzKPD1dDodZbNjNgky/FzTs9lsDFxo4vE4+B72UhxoMH3pEV+s1Wp3E2YBwqngQA5jaQouNDgo+vuQR0pRQeh2u+9oeiaTuZbbY4OwNESOmmwDegpNp9NpcU1VeGBDw58QmqZdsGFALAisgaPrehiawWDwwXPq/Jeh1+u9hOaTQhr+brnX63Xw76dSqSuzW0Z7ZrfMh0Ij82zyUALTh4ID5UNxzB2bZDIZWTU2GC05NtDKsfkz2NVq9WnOYPsmMT3YuAzQsofV1NWTr82Sq+eSV29djwO0FlPPV7vdfhMcyJc/X+Yf2BBg5oFd+0/AN0yzD+RphwJXAAAAAElFTkSuQmCC") left top no-repeat;
+        content: ' ';
+    }
+
+    .fancyboxes-hover-icon a:hover:before, .fancybox-hover-icon:hover:before
+    {
+        visibility: visible;
+    }

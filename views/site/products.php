@@ -1,14 +1,14 @@
 <?php
 
-\notgosu\yii2\modules\metaTag\components\MetaTagRegister::register($metatag, Yii::$app->language);
+use yii\helpers\Html;
+use yii\helpers\Markdown;
+
+\notgosu\yii2\modules\metaTag\components\MetaTagRegister::register($metatag, Yii::$app->language, null, $id);
 
 
 ?>
 
-<div class="clear"></div>
-                        </header><!-- end header -->
-                    </div>
-                    </div>
+
                             <div class="clear"></div>
                 </div>
             </div>
@@ -30,11 +30,11 @@
                   <div id="show-image">
                     <?php foreach($model as $value) {?>
                     <div class="grid_3 indent-bot-5 rt-grid-1">
-                        <?=yii\helpers\Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
+                        <?=Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
                         <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>
-                        <p><?=yii\helpers\Html::encode($value->description)?></p>
-                        <p><?=yii\helpers\Html::encode('Цена : ' .$value->price .'грн')?></p>
-                        <?= \yii\helpers\Html::a('Добавить в корзину', ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
+                        <p><?=Markdown::process($value->description)?></p>
+                        <p><?=Html::encode('Цена : ' .$value->price .'грн')?></p>
+                        <?= Html::a('Добавить в корзину', ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
                     </div>
                     <?php } ?>
                   </div>
