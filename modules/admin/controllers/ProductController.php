@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\imageresize\ImageResize;
 use app\models\Categorie;
+use Imagine\Gmagick\Image;
 use Yii;
 use app\models\Product;
 use app\models\ProductSearch;
@@ -75,14 +76,12 @@ class ProductController extends Controller
         if ($product->load( Yii::$app->request->post()) ) {
 
             // Создаем путь для загрузки картинки
-            $path = Yii::getAlias("@app/web/uploads/");
+            $path = Yii::getAlias("@app/web/uploads");
 
             // Создаем директорию для загрузки картинки
-            BaseFileHelper::createDirectory($path, 0755, true);
-
+            BaseFileHelper::createDirectory($path, 0777, true);
             // Достаем картинку из формы
             $product->images = UploadedFile::getInstance($product, 'images');
-
             // Если картинка не выбрана - сохраняем остальные поля в базу и редирект на index
             if ($product->images == null) {
 
@@ -185,9 +184,8 @@ class ProductController extends Controller
 
             // Вызываем метод imageresize и задаем размеры картинки
             $imageresize::imageresize($image, $new_name, 220, 300);
-
             // -----------------------------------------
-
+//            unset($product->image);
             // Сохраняем все данные в базу
 
             $values = [
