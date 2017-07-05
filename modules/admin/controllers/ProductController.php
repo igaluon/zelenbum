@@ -185,9 +185,11 @@ class ProductController extends Controller
             // Вызываем метод imageresize и задаем размеры картинки
             $imageresize::imageresize($image, $new_name, 220, 300);
             // -----------------------------------------
-//            unset($product->image);
+            if ($product->image != '') {
+                unlink(Yii::$app->request->baseUrl .DIRECTORY_SEPARATOR .$product->image);
+                $product->image = '';
+            }
             // Сохраняем все данные в базу
-
             $values = [
                 'image' => 'uploads' .DIRECTORY_SEPARATOR .$extens,
                 'product' => $product->product,
