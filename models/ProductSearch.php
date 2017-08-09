@@ -21,7 +21,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'categorie_id'], 'integer'],
+            [['id', 'categorie_id', 'price'], 'integer'],
             [['product', 'slug', 'description', 'image'], 'safe'],
             [['categorie'], 'string'],
         ];
@@ -54,7 +54,7 @@ class ProductSearch extends Product
         ]);
 
         $this->load($params);
-//var_dump($params);die;
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -73,10 +73,8 @@ class ProductSearch extends Product
         ]);
 
         $query->andFilterWhere(['like', 'product', $this->product])
-            ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'categorie.categorie', $this->categorie])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'price', $this->price])
+            ->andFilterWhere(['like', 'categorie.categorie', $this->categorie]);
 
         return $dataProvider;
     }

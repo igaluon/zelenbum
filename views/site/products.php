@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
-\notgosu\yii2\modules\metaTag\components\MetaTagRegister::register($metatag, Yii::$app->language, null, $id);
-
-
 ?>
 
 
@@ -28,13 +25,13 @@ use yii\helpers\Markdown;
                 </div>
                 <div class="wrapper">
                   <div id="show-image">
-                    <?php foreach($model as $value) {?>
+                    <?php foreach($product as $value) {?>
                     <div class="grid_3 indent-bot-5 rt-grid-1">
                         <?=Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
                         <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>
                         <p><?=Markdown::process($value->description)?></p>
-                        <p><?=Html::encode('Цена : ' .$value->price .'грн')?></p>
-                        <?= Html::a('Добавить в корзину', ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
+                        <p><?=Html::encode(\Yii::t('app', 'Цена : ') .$value->price .'грн')?></p>
+                        <?= Html::a(\Yii::t('app', 'Добавить в корзину'), ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
                     </div>
                     <?php } ?>
                   </div>

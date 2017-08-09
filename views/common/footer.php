@@ -1,4 +1,26 @@
 <footer>
+    <?php
+    /*
+     * Вывод списка языков для выбора пользователю
+     */
+    use yii\helpers\Html;
+
+    $language = Yii::$app->language; //текущий язык
+    //Создаем массив ссылок всех языков с соответствующими GET параметрами
+    $array_lang = [
+        'en' => Html::a('English', ['site/lanquage', 'lang' => 'en']),
+        'ru' => Html::a('Русский', ['site/lanquage', 'lang' => 'ru']),
+        'uk' => Html::a('Українська', ['site/lanquage', 'lang' => 'uk']),
+    ];
+    //ссылку на текущий язык не выводим
+    if(isset($array_lang[$language])) unset($array_lang[$language]);
+    ?>
+
+    <div class="language-ksl">
+        <?php foreach ($array_lang as $lang) {
+            echo ' '.$lang.' ';
+        } ?>
+    </div>
     <ul class="list-soc">
         <li><a href="https://vk.com/id344748408" targer="_blank"><img src="<?php echo Yii::$app->request->baseUrl; ?>/images/soc-icon-1.png" alt=""></a></li>
     </ul>

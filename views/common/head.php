@@ -1,3 +1,8 @@
+<?php
+
+use app\widgets\menu\Menus;
+
+?>
 <div class="bg-head">
     <div class="glow">
         <div class="top-shadow">
@@ -14,28 +19,12 @@
                             <div class="menu-search">
                                 <!-- menu -->
                                 <nav>
-                                    <?php $itemsInCart = Yii::$app->cart->getCount(); ?>
-                                    <?php echo yii\widgets\Menu::widget([
-                                        'items' =>   [
-                                            ['label' => 'О нас', 'url' => ['site/index']],
-                                            ['label' => 'Ассортимент',
-                                                'options'=>['class'=>'dropdown'],
-                                                'items' =>  app\models\Categorie::menuItems(),
-                                            ],
-                                            ['label' => 'Наши работы', 'url' => ['site/our-works']],
-                                            ['label' => 'Контакты', 'url' => ['site/contacts']],
-                                            ['label' => 'Корзина' . ($itemsInCart ? " ($itemsInCart)" : ''), 'url' => ['/cart/list']],
 
-                                        ],
-                                        'options' => [
-                                            'class' => 'sf-menu sf-js-enabled','data'=>'menu',
-                                        ],
-                                        'activeCssClass' => 'active',
-                                        'activateParents' => true,
-                                        'submenuTemplate' => "\n<ul class='dropdown-menu' role='menu'>\n{items}\n</ul>\n",
-                                    ]); ?>
+                                    <?= Menus::widget();?>
+
                                 </nav>
+
                             </div>
-                            <div class="clear"></div>
-                        </header><!-- end header -->
-                    </div>
+<div class="clear"></div>
+</header><!-- end header -->
+</div>

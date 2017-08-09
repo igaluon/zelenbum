@@ -32,25 +32,11 @@
                 'options' => ['class' => 'sidebar-menu'],
 
                 'items' => [
-                    ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
-                    ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/categorie']],
-
-//                    ['label' => 'Категории',
-
-//                         'items' =>  Category::CategoryMenu()],
-//                         'items' =>  app\models\Categorie::menuAdminItems()],
-
-                    ['label' => 'Заказы', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/order']],
-                    ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' => '',
-                        'items' =>  [
-                            ['label' => 'О нас', 'icon' => 'fa fa-dashboard', 'url' => ['/seo/tag', 'id' => 10]],
-                            ['label' => 'Ассортимент', 'icon' => 'fa fa-dashboard', 'url' => '',
-                                'items' =>  app\models\Categorie::menuAdminItems()],
-                            ['label' => 'Наши работы', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
-                            ['label' => 'Контакты', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
+                                ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
+                                ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/categorie']],
+                                ['label' => 'Заказы', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/order']],
+                                ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' =>['/seo/meta']],
                             ],
-                    ],
-                ],
                 'activeCssClass' => 'active',
                 'activateParents' => true,
             ]

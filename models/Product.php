@@ -26,11 +26,17 @@ class Product extends ActiveRecord implements CartPositionInterface
 
     use CartPositionTrait;
 
+    /**
+     * @return int
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
+    /**
+     * @return int|string
+     */
     public function getId()
     {
         return $this->id;
@@ -56,6 +62,9 @@ class Product extends ActiveRecord implements CartPositionInterface
         return 'product';
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -63,10 +72,9 @@ class Product extends ActiveRecord implements CartPositionInterface
                 'class' => SluggableBehavior::className(),
                 'attribute' => ['product'],
             ],
-            'seo' => [
-                'class' => \notgosu\yii2\modules\metaTag\components\MetaTagBehavior::className(),
-                'languages' => ['ru'],
-            ]
+//            'seo' => [
+//                'class' => \notgosu\yii2\modules\metaTag\components\MetaTagBehavior::className(),
+//                'languages' => ['en', 'ua', 'ru'],            ]
         ];
     }
 
@@ -107,5 +115,29 @@ class Product extends ActiveRecord implements CartPositionInterface
     public function getCategorie()
     {
         return $this->hasOne(Categorie::className(), ['id' => 'categorie_id']);
+    }
+
+    /**
+     * Удаление старой картинки после обновления
+     *
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        //Если картинка выбрана
+        if($this->images){
+            //Если данные обновляются, а не вставляются
+            if (!parent::afterSave($insert, $changedAttributes)) {
+                //Если есть старая картинка
+                if ($changedAttributes['image']) {
+                    //Удаляем старую картинку
+                    unlink($changedAttributes['image']);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

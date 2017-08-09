@@ -4,18 +4,39 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'name' => 'Зеленбум',
+    'language'=>'ru',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'seo',
+        'log',
+    ],
     'defaultRoute' => 'site/index',
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
+//        'seo' => [
+//            'class' => \notgosu\yii2\modules\metaTag\Module::className(),
+//        ],
         'seo' => [
-            'class' => \notgosu\yii2\modules\metaTag\Module::className(),
+            'class' => 'aquy\seo\module\Meta'
         ],
     ],
     'components' => [
+//        'i18n' => [
+//            'translations' => [
+//                'app*' => [
+//                    'class' => 'yii\i18n\PhpMessageSource',
+//                    //'basePath' => '@app/messages',
+//                    'sourceLanguage' => 'ru',
+////                    'fileMap' => [
+////                        'app'       => 'app.php',
+////                        'app/error' => 'error.php',
+////                    ],
+//                ],
+//            ],
+//        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dBjBzMTsoFsUtpIF4GAaAqtGVC3hjCfo',
@@ -54,18 +75,57 @@ $config = [
                 ],
             ],
         ],
+        'seo' => [
+            'class' => 'aquy\seo\components\Seo'
+        ],
         'db' => require(__DIR__ . '/db.php'),
+//        'urlManager' => [
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+////            'class' => 'app\component\UrlManager',
+//            'rules' => [
+////                'view-category/<name:\*>' => 'admin/category',
+//                'admin' => 'admin/product',
+//                'admin/logout' => 'admin/admin/logout',
+//            ],
+//        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'class' => 'app\component\UrlManager',
             'rules' => [
-//                'view-category/<name:\*>' => 'admin/category',
+
+//                [
+//                    'pattern' => 'site/<page:\w+>/<lang>',
+//                    'route' => 'post/index',
+//                    'defaults' => ['lang' => ''],
+//                ],
+                '<controller:(site)>/<lang:\w+?>/<action:(index)>' => 'site/index',
+                '<controller:(site)>/<lang:\w+?>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
+                '<controller:(cart)>/<lang:\w+>/<action:(list)>' => '<controller>/<action>',
                 'admin' => 'admin/product',
-                'admin/logout' => 'admin/admin/logout',
-            ],
+                '<controller:(admin|seo)>/<action:(\w+?)>' => '<controller>/<action>',
+
+//                '<controller:(site|product)>/<lang:\w+>/<action:(index|update|delete)>' => '<controller>/<action>',
+//              'web/.<language: \w+>./site/product' => 'site/product',
+//              'web/site/.<language: \w+>./product' => 'site/<language>/product',
+//                'http://<language:\w+>.example.com/posts' => 'post/index,
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/page-<page:\d+>/' => 'post/index',
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/' => 'post/index',
+//
+//                [
+//                    'pattern'=> '<lang:' . app\languages\LanguageKsl::$url_language . '>/<url\w+>',
+//                    'route' => 'post/view',
+//                    'suffix' => '.html',
+//                ],
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/<action:(contact|index|logout|language|about|signup)>' => 'site/<action>',
+            ]
         ],
     ],
     'params' => $params,
+    'on beforeRequest' => function () {
+            (new app\languages\LanguageKsl())->run();
+        },
 ];
 
 if (YII_ENV_DEV) {

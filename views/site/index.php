@@ -1,8 +1,3 @@
-<?php
-
-\notgosu\yii2\modules\metaTag\components\MetaTagRegister::register($model, Yii::$app->language);
-
-?>
 
 <div class="clear"></div>
 <div class="grid_12 rt-indent-bottom-1">
@@ -28,14 +23,14 @@
 
 <div class="clear"></div>
 <div class="grid_12">
-    <div class="heading-wrapper indent-bot-2"><h3>Ассортимент</h3><div class="heading-after"></div></div>
+    <div class="heading-wrapper indent-bot-2"><h3><?=\Yii::t('app', 'Ассортимент')?></h3><div class="heading-after"></div></div>
     <div>
         <div class="grid_4 alpha rt-indent-bottom-1">
             <a href="/category?id=1">
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img1.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=1">Камень</a></p>
+                <p class="img-caption"><a href="/category?id=1"><?=\Yii::t('app', 'Камень')?></a></p>
             </a>
         </div>
         <div class="grid_4 rt-indent-bottom-1">
@@ -43,7 +38,7 @@
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img2.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=2">Садовая мебель</a></p>
+                <p class="img-caption"><a href="/category?id=2"><?=\Yii::t('app', 'Садовая мебель')?></a></p>
             </a>
         </div>
         <div class="grid_4 omega">
@@ -51,7 +46,7 @@
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img3.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=3">Ретро сувениры</a></p>
+                <p class="img-caption"><a href="/category?id=3"><?=\Yii::t('app', 'Ретро сувениры')?></a></p>
             </a>
         </div>
 

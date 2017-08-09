@@ -2,24 +2,28 @@
 
 namespace app\controllers;
 
+use app\languages\LanguageKsl;
 use app\models\Categorie;
 use app\models\ContactForm;
 use app\models\Product;
-use app\models\RegisterMetaTag;
 use app\models\User;
 use app\component\GoMail;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-
+use yii\web\NotFoundHttpException;
 
 
 class SiteController extends Controller
 {
-    public $layout = "main";
-
+    /**
+     * @param \yii\base\Action $action
+     * @return bool
+     */
     public function beforeAction($action)
     {
+//        \Yii::$app->language = 'en';
+
         if (parent::beforeAction($action)) {
             Url::remember();
             return true;
@@ -27,6 +31,46 @@ class SiteController extends Controller
             return false;
         }
     }
+
+    /**
+     * @return array
+     */
+//    public function actions()
+//    {
+//        return [
+//            'language' => [
+//                'class' => 'app\languages\LanguageAction',
+//            ],
+//        ];
+//    }
+    /**
+     *
+     */
+    public function actionLanquage()
+     {
+         $language = Yii::$app->request->get('lang');
+         //предыдущая страница
+         $url_referrer = Yii::$app->request->referrer;
+//         var_dump($url_referrer);die;
+         /*
+          * разбивает URL на подмассив $match_arr
+          * 0. http://site.loc/ru/contact
+          * 1. http://site.loc
+          * 2. ru или uk или en
+          * 3. остальная часть
+          */
+         $list_languages = LanguageKsl::$url_language; //список языков
+
+//         preg_match("#^(http:\/\/\w+/\w+)($list_languages)?(.*)#",$url_referrer, $match_arr);
+         preg_match("#^(http:\/\/\w+)(/\w+)(/\w+)($list_languages)?(.*)#",$url_referrer, $match_arr);
+         // замена идентификатр языка
+         $match_arr[4] = '/' .$language;
+         // создание нового URL
+//        var_dump($match_arr[2].$match_arr[3].$match_arr[4].$match_arr[5]);die;
+         $url = $match_arr[2].$match_arr[3].$match_arr[4].$match_arr[5];
+         // перенаправление
+         Yii::$app->response->redirect($url);
+     }
 
     /**
      * Displays homepage.
@@ -37,7 +81,7 @@ class SiteController extends Controller
     {
         \Yii::$app->cache->flush();
 
-        $model = new RegisterMetaTag();
+        $model = new Categorie();
 
         return $this->render('index', ['model' => $model]);
     }
@@ -52,30 +96,30 @@ class SiteController extends Controller
 
 
     /**
+     * @param $id
      * @return string
      */
     public function actionProduct($id)
     {
         $this->layout = 'products';
 
-        $metatag = new RegisterMetaTag();
+        $model = new Categorie();
 
-        $model = Product::findAll(['categorie_id' => $id]);
+        $product = Product::findAll(['categorie_id' => $id]);
 
         $category = Categorie::findOne(['id' => $id]);
 
         return $this->render('products',
             [
                 'model' => $model,
+                'product' => $product,
                 'name' => $category->categorie,
-                'metatag' => $metatag,
                 'id' => $id,
             ]);
     }
 
     public function actionContacts()
     {
-
         $this->layout = 'white';
 
         $model = new ContactForm();
@@ -97,46 +141,45 @@ class SiteController extends Controller
         return $this->render("contact", ['model' => $model]);
 
     }
+
     /**
- * @ret
- *
- * urn string
+     * Finds the Product model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Product the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionExample()
+    protected function findModel($id)
     {
-
-//        $id = Yii::$app->request->get('id');
-//        $name = Yii::$app->request->get('name');
-        $id = 'tree';
-        $name = 'Дерево';
-//        \Yii::$app->params['some_value' => $name];
-        \yii::$app->cache->set('name', $name);
-
-        $model = Product::findAll(['category_name' => $id]);
-
-        return $this->render('example', ['model' => $model, 'name' =>$name]);
-    }
-
-    public function actionHasMany()
-    {
-        $product = Categorys::find()
-            ->with('product')
-//            ->where(2)
-            ->all();
-        foreach ($product as $value) {
-           echo $value->category, '<br>';
+        if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-        public function actionUrl()
-    {
-        Yii::setAlias('@frontendWebroot', Yii::$app->request->baseUrl);
-        $url = Yii::getAlias('@frontendWebroot');
-        echo Yii::getAlias('@frontendWebroot');
-        echo $url;
-    }
+
+    /**
+     * @return string
+     */
     public function actionOurWorks()
     {
         return $this->render('our_works');
+    }
+
+
+
+        public function actionUrl()
+    {
+        echo Yii::$app->controller->id;
+        echo Yii::$app->request->baseUrl;
+       echo Yii::$app->controller->action->id;
+        Yii::setAlias('@frontendWebroot', Yii::$app->request->baseUrl);
+        $url = Yii::getAlias('@frontendWebroot');
+        echo Yii::getAlias('@frontendWebroot');
+        echo Yii::getAlias('@notgosu/yii2/modules/metaTag/messages');
+        echo Yii::getAlias('/aquy/seo/module/messages');
+        echo Yii::getAlias('@aquy/seo/module/message');
+        echo $url;
     }
 
 }

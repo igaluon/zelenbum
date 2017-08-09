@@ -317,8 +317,8 @@ class AdminController extends Controller
     {
 
         \Yii::$app->user->logout();
-        return $this->goBack();
-//        return $this->redirect('admin/login');
+//        return $this->goBack();
+        return $this->redirect('admin/login');
     }
 
     /**

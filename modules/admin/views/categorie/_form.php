@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Categorie;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Categorie */

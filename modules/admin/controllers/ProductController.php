@@ -90,7 +90,6 @@ class ProductController extends Controller
                 return $this->redirect(['index']);
 
             }
-
             // Меняем название картинки для защиты от кирилицы
             $extens = time() .'.' .$product->images->extension;
             // Загружаем картинку
@@ -108,11 +107,8 @@ class ProductController extends Controller
 
             // Вызываем метод imageresize и задаем размеры картинки
             $imageresize::imageresize($image, $new_name, 220, 300);
-
             // -----------------------------------------
-
             // Сохраняем все данные в базу
-
             $values = [
                 'image' => 'uploads' .DIRECTORY_SEPARATOR .$extens,
                 'product' => $product->product,
@@ -153,9 +149,6 @@ class ProductController extends Controller
             // Создаем путь для загрузки картинки
             $path = Yii::getAlias("@app/web/uploads");
 
-            // Создаем директорию для загрузки картинки
-            BaseFileHelper::createDirectory($path, 0755, true);
-
             // Достаем картинку из формы
             $product->images = UploadedFile::getInstance($product, 'images');
 
@@ -185,10 +178,12 @@ class ProductController extends Controller
             // Вызываем метод imageresize и задаем размеры картинки
             $imageresize::imageresize($image, $new_name, 220, 300);
             // -----------------------------------------
-            if ($product->image != '') {
-                unlink(Yii::$app->request->baseUrl .DIRECTORY_SEPARATOR .$product->image);
-                $product->image = '';
-            }
+            $changedAttributes =$product->image;
+//            var_dump($changedAttributes);die;
+//            if ($product->image != '') {
+//                unlink($product->image);
+//                $product->image = '';
+//            }
             // Сохраняем все данные в базу
             $values = [
                 'image' => 'uploads' .DIRECTORY_SEPARATOR .$extens,

@@ -53,7 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Название товара',
                 'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'product', 'product')
             ],
-            'price',
+            [
+                'attribute' => 'price',
+                'format' => 'raw',
+                'value' => 'price',
+                'label' => 'Цена',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'price', 'price')
+            ],
             'description:ntext',
             [
                 'class' => 'yii\grid\ActionColumn',

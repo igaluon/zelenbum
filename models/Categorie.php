@@ -25,11 +25,11 @@ class Categorie extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => 'categorie',
-            ],
-        ];
+                    [
+                        'class' => SluggableBehavior::className(),
+                        'attribute' => 'categorie',
+                    ],
+                ];
     }
     /**
      * @inheritdoc
@@ -90,14 +90,6 @@ class Categorie extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMetaTag()
-    {
-        return $this->hasMany(MetaTag::className(), ['category_id' => 'id']);
-    }
-
-    /**
      * Вывод главного меню
      * @return array
      */
@@ -124,11 +116,8 @@ class Categorie extends \yii\db\ActiveRecord
         foreach ($categories as $category) {
             if ($category->parent_id === $parent) {
                 $menuItems[$category->id] = [
-//                    'active' => $activeId === $category->id,
-//                    'active' => true,
-                    'label' => $category->categorie,
-//                    'labelTemplate' => $category->parent_id === $parent ? '<a href="#"></a>' : '#',
-//                    'url' => isset($category->parent_id) ? ['site/product', 'id' => $category->id, 'name' => $category->categorie] : '#',
+//                    'label' => \app\widgets\menu\Menus::t('menu' ,$category->categorie),
+                    'label' => \app\widgets\menu\Menus::t('menu', $category->categorie),
                     'url' => ['site/product', 'id' => $category->id, 'name' => $category->slug],
                     'items' => static::getMenuItems($categories, $activeId, $category->id),
                 ];
