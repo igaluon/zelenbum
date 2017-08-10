@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use notgosu\yii2\modules\metaTag\models\MetaTag;
 use Yii;
 use yii\behaviors\SluggableBehavior;
 

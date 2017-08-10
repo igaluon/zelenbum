@@ -8,6 +8,7 @@ use app\models\Categorie;
 /* @var $model app\models\Categorie */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $categories app\models\Categorie[] */
+$categories = Categorie::find()->indexBy('id')->orderBy('id')->all();
 
 ?>
 

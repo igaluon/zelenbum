@@ -54,6 +54,8 @@ class CartController extends \yii\web\Controller
 
     public function actionOrder()
     {
+        $lang = \Yii::$app->request->get('lang');
+
         $order = new Order();
 
         /* @var $cart ShoppingCart */
@@ -87,7 +89,7 @@ class CartController extends \yii\web\Controller
             \Yii::$app->session->addFlash('success', 'Thanks for your order. We\'ll contact you soon.');
             $order->sendEmail();
 
-            return $this->redirect('/web/site/index');
+            return $this->redirect('/web/site/'.$lang.'/index');
         }
 
         return $this->render('order', [

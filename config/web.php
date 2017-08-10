@@ -79,31 +79,18 @@ $config = [
             'class' => 'aquy\seo\components\Seo'
         ],
         'db' => require(__DIR__ . '/db.php'),
-//        'urlManager' => [
-//            'enablePrettyUrl' => true,
-//            'showScriptName' => false,
-////            'class' => 'app\component\UrlManager',
-//            'rules' => [
-////                'view-category/<name:\*>' => 'admin/category',
-//                'admin' => 'admin/product',
-//                'admin/logout' => 'admin/admin/logout',
-//            ],
-//        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'class' => 'app\component\UrlManager',
             'rules' => [
-
-//                [
-//                    'pattern' => 'site/<page:\w+>/<lang>',
-//                    'route' => 'post/index',
-//                    'defaults' => ['lang' => ''],
-//                ],
-                '<controller:(site)>/<lang:\w+?>/<action:(index)>' => 'site/index',
+                
+                '<controller:(site)>/<lang:\w+?>/<action:(index)>' => '<controller>/<action>',
                 '<controller:(site)>/<lang:\w+?>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
-                '<controller:(cart)>/<lang:\w+>/<action:(list)>' => '<controller>/<action>',
+                '<controller:(cart)>/<lang:\w+>/<action:(list|order)>' => '<controller>/<action>',
+                'admin/login' => 'admin/admin/login',
                 'admin' => 'admin/product',
+                'admin/logout' => 'admin/admin/logout',
                 '<controller:(admin|seo)>/<action:(\w+?)>' => '<controller>/<action>',
 
 //                '<controller:(site|product)>/<lang:\w+>/<action:(index|update|delete)>' => '<controller>/<action>',
@@ -115,8 +102,8 @@ $config = [
 //
 //                [
 //                    'pattern'=> '<lang:' . app\languages\LanguageKsl::$url_language . '>/<url\w+>',
-//                    'route' => 'post/view',
-//                    'suffix' => '.html',
+//                    'route' => 'site/index',
+//                    'suffix' => '.php',
 //                ],
 //                '<lang:' . app\languages\LanguageKsl::$url_language . '>/<action:(contact|index|logout|language|about|signup)>' => 'site/<action>',
             ]
