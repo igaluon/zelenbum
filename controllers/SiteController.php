@@ -62,12 +62,13 @@ class SiteController extends Controller
          $list_languages = LanguageKsl::$url_language; //список языков
 
 //         preg_match("#^(http:\/\/\w+/\w+)($list_languages)?(.*)#",$url_referrer, $match_arr);
-         preg_match("#^(http:\/\/\w+)(/\w+)(/\w+)($list_languages)?(.*)#",$url_referrer, $match_arr);
+         preg_match("#^(http:\/\/\w+)(/\w+)(\/$list_languages)?#", $url_referrer, $match_arr);
          // замена идентификатр языка
-         $match_arr[4] = '/' .$language;
+         $match_arr[3] = '/' .$language;
          // создание нового URL
-//        var_dump($match_arr[2].$match_arr[3].$match_arr[4].$match_arr[5]);die;
-         $url = $match_arr[2].$match_arr[3].$match_arr[4].$match_arr[5];
+//        var_dump($match_arr[2].$match_arr[4].$match_arr[3].$match_arr[5]);die;
+//         $url = $match_arr[2].$match_arr[4].$match_arr[3].$match_arr[5];
+         $url = $match_arr[2].$match_arr[3];
          // перенаправление
          Yii::$app->response->redirect($url);
      }

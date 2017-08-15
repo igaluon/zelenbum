@@ -84,10 +84,11 @@ $config = [
             'showScriptName' => false,
             'class' => 'app\component\UrlManager',
             'rules' => [
-                
-                '<controller:(site)>/<lang:\w+?>/<action:(index)>' => '<controller>/<action>',
-                '<controller:(site)>/<lang:\w+?>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
-                '<controller:(cart)>/<lang:\w+>/<action:(list|order)>' => '<controller>/<action>',
+
+                '<lang:(en|ru|uk)>' => 'site/index',
+//                '<lang:(\w+?)>/<controller:(site)>/<action:(index)>' => '<controller>/<action>',
+                '<controller:(site)>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
+                '<lang:(\w+?)>/<controller:(cart)>/<action:(list|order)>' => '<controller>/<action>',
                 'admin/login' => 'admin/admin/login',
                 'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
@@ -98,14 +99,14 @@ $config = [
 //              'web/site/.<language: \w+>./product' => 'site/<language>/product',
 //                'http://<language:\w+>.example.com/posts' => 'post/index,
 //                '<lang:' . app\languages\LanguageKsl::$url_language . '>/page-<page:\d+>/' => 'post/index',
-//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/' => 'post/index',
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/' => 'site/index',
 //
 //                [
 //                    'pattern'=> '<lang:' . app\languages\LanguageKsl::$url_language . '>/<url\w+>',
 //                    'route' => 'site/index',
 //                    'suffix' => '.php',
 //                ],
-//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/<action:(contact|index|logout|language|about|signup)>' => 'site/<action>',
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/<action:(contact|product|about)>' => 'site/<action>',
             ]
         ],
     ],
