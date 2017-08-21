@@ -18,9 +18,9 @@ class UrlManager extends \yii\web\UrlManager {
         $url = Yii::$app->request->url;
 //        echo $url;die;
 
-        preg_match("#^(/\w+)?(/\w+)?#", $url, $match_arr);
-
-        if (isset($match_arr[2]) && $match_arr[2] == '/admin' | $match_arr[2] == '/seo') {
+        preg_match("#^(/\w+)?#", $url, $match_arr);
+//        var_dump($match_arr[1]);die;
+        if (isset($match_arr[1]) && $match_arr[1] == '/admin' | $match_arr[1] == '/seo') {
             return parent::createUrl($params);
         }
         elseif (empty($params['lang'])) {

@@ -4,6 +4,7 @@ use \yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $products app\models\Product[] */
+/* @var $order app\models\Order */
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -72,6 +73,8 @@ use \yii\bootstrap\ActiveForm;
                 /* @var $form ActiveForm */
                 $form = ActiveForm::begin([
                     'id' => 'order-form',
+                    'enableAjaxValidation' => true,
+                    'enableClientValidation' => true,
                 ]) ?>
 
                 <?= $form->field($order, 'phone') ?>

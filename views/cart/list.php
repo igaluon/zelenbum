@@ -78,7 +78,7 @@ use \yii\helpers\Html;
                         Обшая сумма: $<?= $total ?>
                     </div>
                     <div class="col-xs-2">
-                        <?= Html::a('Купить', ['cart/'.$lang.'/order'], ['class' => 'btn btn-success'])?>
+                        <?= Html::a('Купить', ['cart/order'], ['class' => 'btn btn-success'])?>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <?php $itemsInCart = Yii::$app->cart->getCount(); ?>
     <?php echo yii\widgets\Menu::widget([
         'items' =>   [
-            ['label' => \app\widgets\menu\Menus::t('menu', 'О нас'), 'url' => ['/']],
+            ['label' => \app\widgets\menu\Menus::t('menu', 'О нас'), 'url' => ['site/index']],
             ['label' => \app\widgets\menu\Menus::t('menu', 'Ассортимент'),
                 'options'=> ['class'=>'dropdown'],
                 'items' =>  app\models\Categorie::menuItems(),

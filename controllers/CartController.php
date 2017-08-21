@@ -89,7 +89,7 @@ class CartController extends \yii\web\Controller
             \Yii::$app->session->addFlash('success', 'Thanks for your order. We\'ll contact you soon.');
             $order->sendEmail();
 
-            return $this->redirect('/web/site/'.$lang.'/index');
+            return $this->redirect(\Yii::$app->request->hostInfo .'/'.  $lang);
         }
 
         return $this->render('order', [

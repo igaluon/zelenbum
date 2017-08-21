@@ -8,9 +8,9 @@
     $language = Yii::$app->language; //текущий язык
     //Создаем массив ссылок всех языков с соответствующими GET параметрами
     $array_lang = [
-        'en' => Html::a('English', ['site/lanquage', 'lang' => 'en']),
-        'ru' => Html::a('Русский', ['site/lanquage', 'lang' => 'ru']),
-        'uk' => Html::a('Українська', ['site/lanquage', 'lang' => 'uk']),
+        'en' => Html::a('English', ['site/language', 'lang' => 'en']),
+        'ru' => Html::a('Русский', ['site/language', 'lang' => 'ru']),
+        'uk' => Html::a('Українська', ['site/language', 'lang' => 'uk']),
     ];
     //ссылку на текущий язык не выводим
     if(isset($array_lang[$language])) unset($array_lang[$language]);

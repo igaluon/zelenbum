@@ -66,7 +66,7 @@ class AdminController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
-            $this->redirect('/web/admin/product');
+            $this->redirect('/admin/product');
 
         }
 

@@ -22,7 +22,6 @@ class SiteController extends Controller
      */
     public function beforeAction($action)
     {
-//        \Yii::$app->language = 'en';
 
         if (parent::beforeAction($action)) {
             Url::remember();
@@ -35,43 +34,47 @@ class SiteController extends Controller
     /**
      * @return array
      */
-//    public function actions()
-//    {
-//        return [
-//            'language' => [
-//                'class' => 'app\languages\LanguageAction',
-//            ],
-//        ];
-//    }
+    public function actions()
+    {
+        return [
+            'language' => [
+                'class' => 'app\languages\LanguageAction',
+            ],
+        ];
+    }
     /**
      *
      */
-    public function actionLanquage()
-     {
-         $language = Yii::$app->request->get('lang');
-         //предыдущая страница
-         $url_referrer = Yii::$app->request->referrer;
-//         var_dump($url_referrer);die;
-         /*
-          * разбивает URL на подмассив $match_arr
-          * 0. http://site.loc/ru/contact
-          * 1. http://site.loc
-          * 2. ru или uk или en
-          * 3. остальная часть
-          */
-         $list_languages = LanguageKsl::$url_language; //список языков
-
-//         preg_match("#^(http:\/\/\w+/\w+)($list_languages)?(.*)#",$url_referrer, $match_arr);
-         preg_match("#^(http:\/\/\w+)(/\w+)(\/$list_languages)?#", $url_referrer, $match_arr);
-         // замена идентификатр языка
-         $match_arr[3] = '/' .$language;
-         // создание нового URL
-//        var_dump($match_arr[2].$match_arr[4].$match_arr[3].$match_arr[5]);die;
-//         $url = $match_arr[2].$match_arr[4].$match_arr[3].$match_arr[5];
-         $url = $match_arr[2].$match_arr[3];
-         // перенаправление
-         Yii::$app->response->redirect($url);
-     }
+//    public function actionLanguage()
+//
+//         $language = Yii::$app->request->get('lang');
+//
+//         //предыдущая страница
+//         $url_referrer = Yii::$app->request->referrer;
+//
+//         //С.Ш. мой костыль - если $url_referrer пустой - формируем его под индексную страницу
+//        if ($url_referrer == null) {
+//            $url_referrer = Yii::$app->request->hostInfo. '/ru';
+//        }
+//         /*
+//          * разбивает URL на подмассив $match_arr
+//          * 0. http://site.loc/ru/contact
+//          * 1. http://site.loc
+//          * 2. ru или uk или en
+//          * 3. остальная часть
+//          */
+//         $list_languages = LanguageKsl::$url_language; //список языков
+//
+//
+//        preg_match("#^(http:\/\/\w+\.\w+)/($list_languages)?(.*)#",$url_referrer, $match_arr);
+//        // замена идентификатора языка
+//        $match_arr[2] = '/'.$language;
+//        // создание нового URL
+//        $url = $match_arr[1].$match_arr[2].$match_arr[3];
+////        var_dump($url);die;
+//        // перенаправление
+//        Yii::$app->response->redirect($url);
+//     }
 
     /**
      * Displays homepage.
@@ -171,15 +174,18 @@ class SiteController extends Controller
 
         public function actionUrl()
     {
-        echo Yii::$app->controller->id;
-        echo Yii::$app->request->baseUrl;
-       echo Yii::$app->controller->action->id;
+        echo 1, Yii::$app->controller->id, '<br>';
+        echo 2, Yii::$app->basePath, '<br>';
+        echo 2.1, Yii::$app->homeUrl, '<br>';
+        echo 2.2, Yii::$app->request->hostInfo, '<br>';
+        echo 2.3, Yii::$app->getHomeUrl(), '<br>';
+       echo 3, Yii::$app->controller->action->id, '<br>';
         Yii::setAlias('@frontendWebroot', Yii::$app->request->baseUrl);
         $url = Yii::getAlias('@frontendWebroot');
-        echo Yii::getAlias('@frontendWebroot');
-        echo Yii::getAlias('@notgosu/yii2/modules/metaTag/messages');
-        echo Yii::getAlias('/aquy/seo/module/messages');
-        echo Yii::getAlias('@aquy/seo/module/message');
+        echo 4, Yii::getAlias('@frontendWebroot'), '<br>';
+        echo 5, Yii::getAlias('@notgosu/yii2/modules/metaTag/messages'), '<br>';
+        echo 6, Yii::getAlias('/aquy/seo/module/messages'), '<br>';
+        echo 7, Yii::getAlias('@aquy/seo/module/message'), '<br>';
         echo $url;
     }
 

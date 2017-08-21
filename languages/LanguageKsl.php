@@ -15,48 +15,30 @@ class LanguageKsl
     static $default_language = 'ru'; //основной язык (по-умолчанию)
 
     public function run(){
+        Yii::$app->homeUrl = 'site/index';
         $url = Yii::$app->request->url;
 //var_dump($url);die;
         $list_languages = self::$url_language;
-        preg_match("#^(/\w+)?(/\/$list_languages)?(/\w+)?(.*)?#", $url, $match_arr);
-//        preg_match("#^(/\w+)(/en|/ru|/uk)?(/\w+)(/\w+)?#", $url, $match_arr);
-//        var_dump($match_arr[1]);die;
 
-        if($match_arr[3] == '/admin' |$match_arr[3] == '/seo'){
-            return;
-//            Yii::$app->response->redirect($match_arr[1].$match_arr[2].$match_arr[4]);;
+
+        preg_match("#^/($list_languages)?(.*)#", $url, $match_arr);
+                if($match_arr[2] == '/admin' |$match_arr[2] == '/seo'){
+//            return;
+            Yii::$app->response->redirect('/admin');
         }
-//echo $match_arr[3];die;
-//var_dump(Yii::$app->formatter->locale);die;
-        //Если URL содержит указатель языка - сохраняем его в параметрах приложения и используем
-        if ($match_arr[2] && $match_arr[2] != '/'){
-            $lang = $match_arr[2];
-//            Yii::$app->language = substr($lang, 1);
-//            Yii::$app->formatter->locale = substr($lang, 1);
-            Yii::$app->language = $lang;
-            Yii::$app->formatter->locale = $lang;
-//            Yii::$app->homeUrl = $match_arr[3];
 
+        //Если URL содержит указатель языка - сохраняем его в параметрах приложения и используем
+        if (isset($match_arr[1]) && $match_arr[0] != '/'){
+            Yii::$app->language = $match_arr[1] ? $match_arr[1]: Yii::$app->language;
+            Yii::$app->formatter->locale = $match_arr[1];
+            Yii::$app->homeUrl = '/' .$match_arr[1];
             /*
              * Если URL не содержит указатель языка (например главная страница)-
              * делаем перенаправление на ее же + добавляем GET параметр языка
              */
         } else {
-//            $lang = Yii::$app->request->get('lang');
-//            $str=strpos(Yii::$app->language, '-');
-//            $lang=substr(Yii::$app->language, 0, $str);
-            $lang = Yii::$app->language;
-//            Yii::$app->response->redirect(['site/index']);
-//            var_dump($lang. $match_arr[2]);die;
-//            Yii::$app->response->redirect($lang. $match_arr[2]);
-            Yii::$app->response->redirect($lang.$match_arr[3].$match_arr[4]);
-//            var_dump($match_arr[1].$match_arr[2].'/'.$lang.$match_arr[4].$match_arr[5]);die;
-//            if (isset($match_arr[5])) {
-//            Yii::$app->response->redirect($match_arr[1].'/'.$lang.$match_arr[2].$match_arr[4].$match_arr[5]);
-//            } else {
-//                    Yii::$app->response->redirect($match_arr[1].'/'.$lang.$match_arr[2].$match_arr[4]);
-//
-//            }
+            $lang = self::$default_language;
+            Yii::$app->response->redirect(['site/language', 'lang' => $lang]);
         }
     }
 }

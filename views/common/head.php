@@ -12,8 +12,8 @@ use app\widgets\menu\Menus;
                         <!-- header -->
                         <header>
                             <h1 class="logo">
-                                <a href="/">
-                                    <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/logo.png" width="150px" height="65px" alt="Зеленбум - Все для красивой усадьбы" />
+                                <a href="<?php echo Yii::$app->homeUrl; ?>">
+                                    <img src="<?php echo Yii::$app->getRequest()->getBaseUrl(true); ?>/images/logo.png" width="150px" height="65px" alt="Зеленбум - Все для красивой усадьбы" />
                                 </a>
                             </h1>
                             <div class="menu-search">

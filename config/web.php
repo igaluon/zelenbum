@@ -47,7 +47,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => '/web/admin/admin/login',
+            'loginUrl' => 'admin/admin/login',
         ],
         'cart' => [
             'class' => 'yz\shoppingcart\ShoppingCart',
@@ -84,12 +84,11 @@ $config = [
             'showScriptName' => false,
             'class' => 'app\component\UrlManager',
             'rules' => [
-
-                '<lang:(en|ru|uk)>' => 'site/index',
-//                '<lang:(\w+?)>/<controller:(site)>/<action:(index)>' => '<controller>/<action>',
-                '<controller:(site)>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
-                '<lang:(\w+?)>/<controller:(cart)>/<action:(list|order)>' => '<controller>/<action>',
-                'admin/login' => 'admin/admin/login',
+//                '<lang:' . app\languages\LanguageKsl::$url_language . '>' => 'site/index',
+                '<lang:(ru|uk|en)?>' => 'site/index',
+                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
+                '<lang:(ru|uk|en)?>/<controller:(cart)>/<action:(list|order)>' => '<controller>/<action>',
+//                'admin/login' => 'admin/admin/login',
                 'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
                 '<controller:(admin|seo)>/<action:(\w+?)>' => '<controller>/<action>',
