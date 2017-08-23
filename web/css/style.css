@@ -125,6 +125,7 @@ strong, strong a {
 .indent-bot-6 {margin-bottom: 12px;}
 .indent-bot-7 {margin-bottom: 40px;}
 .indent-bot-8 {margin-bottom: 25px;}
+.indent-bot-31 {margin-bottom: 15px;height: 300px;}
 
 
 /* HEADER
@@ -500,4 +501,8 @@ footer {
 
 #page4 .wrapper .preview-img{
 	width: 300px;
+}
+#show-img {
+    display: inline-block;
+    margin-left: 14px;
 }

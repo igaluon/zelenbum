@@ -34,27 +34,27 @@ use \yii\helpers\Html;
                 <div class="row">
                     <div class="col-xs-4">
 
-                    </div>
-                    <div class="col-xs-2">
-                        <?=\Yii::t('app', 'Цена')?>
-                    </div>
-                    <div class="col-xs-2">
-                        <?=\Yii::t('app', 'Количество')?>
-                    </div>
-                    <div class="col-xs-2">
-                        <?=\Yii::t('app', 'Сумма')?>
-                    </div>
-                    <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-2">
+                            <?=\Yii::t('app', 'Цена')?>
+                        </div>
+                        <div class="col-xs-2">
+                            <?=\Yii::t('app', 'Количество')?>
+                        </div>
+                        <div class="col-xs-2">
+                            <?=\Yii::t('app', 'Сумма')?>
+                        </div>
+                        <div class="col-xs-2">
 
                     </div>
                 </div>
 <!--                --><?php //foreach ($products as $product):?>
                 <div class="row">
                     <div class="col-xs-4">
-                        <?= Html::encode($product->product) ?>
+                        <?= Html::encode(\Yii::t('app', $product->product)) ?>
                     </div>
                     <div class="col-xs-2">
-                        $<?= $product->price ?>
+                        <?php echo $lang == 'en' ?  '$' .round($product->price/26) :  $product->price. 'грн';?>
                     </div>
                     <div class="col-xs-2">
                         <?= $quantity = $product->getQuantity()?>
@@ -63,7 +63,7 @@ use \yii\helpers\Html;
                         <?= Html::a('+', ['cart/update', 'id' => $product->getId(), 'quantity' => $quantity + 1], ['class' => 'btn btn-success'])?>
                     </div>
                     <div class="col-xs-2">
-                        $<?= $product->getCost() ?>
+                        <?php echo $lang == 'en' ?  '$' .round($product->getCost()/26) :  $product->getCost(). 'грн';?>
                     </div>
                     <div class="col-xs-2">
                         <?= Html::a('×', ['cart/remove', 'id' => $product->getId()], ['class' => 'btn btn-danger'])?>
@@ -75,7 +75,8 @@ use \yii\helpers\Html;
 
                     </div>
                     <div class="col-xs-2">
-                        <?=\Yii::t('app', 'Обшая сумма:')?> $<?= $total ?>
+                        <?=\Yii::t('app', 'Обшая сумма:')?>
+                        <?php echo $lang == 'en' ?  '$' .round($total/26) :  $total. 'грн';?>
                     </div>
                     <div class="col-xs-2">
                         <?= Html::a(\Yii::t('app', 'Купить'), ['cart/order'], ['class' => 'btn btn-success'])?>

@@ -78,7 +78,7 @@ class CartController extends \yii\web\Controller
                 $orderItem->quantity = $product->getQuantity();
                 if (!$orderItem->save(false)) {
                     $transaction->rollBack();
-                    \Yii::$app->session->set('error', 'Cannot place your order. Please contact us.');
+                    \Yii::$app->session->set('error', \Yii::t('app', 'Невозможно выполнить заказ. Пожалуйста свяжитесь с нами.'));
                     return $this->redirect(\Yii::$app->request->hostInfo .'/'.  $lang);
                 }
             }
@@ -86,7 +86,7 @@ class CartController extends \yii\web\Controller
             $transaction->commit();
             \Yii::$app->cart->removeAll();
 
-            \Yii::$app->session->set('success', 'Thanks for your order. We\'ll contact you soon.');
+            \Yii::$app->session->set('success', \Yii::t('app', 'Спасибо за ваш заказ. Мы скоро свяжемся с вами.'));
             $order->sendEmail();
 
             return $this->redirect(\Yii::$app->request->hostInfo .'/'.  $lang);

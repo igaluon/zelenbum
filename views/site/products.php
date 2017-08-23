@@ -19,12 +19,11 @@ use yii\helpers\Markdown;
             <section id="content">
                 <div class="wrapper">
                     <div class="grid_10 alpha">
-                        <h2 class="indent-bot-4"><?=yii\helpers\Html::encode($name)?></h2>
-                        <?php foreach($product as $value) {?>
-                        <p class="indent-bot-3"><?=\Yii::t('app', 'Цена : ')?></p>
+                        <h2 class="indent-bot-4"><?=yii\helpers\Html::encode(\Yii::t('app', $name))?></h2>
+                        <p class="indent-bot-3"><?=\Yii::t('app', $categorie->description)?></p>
                     </div>
                   <div id="show-image">
-
+                    <?php foreach($product as $value) {?>
                     <div class="grid_3 indent-bot-5 rt-grid-1">
                         <?=Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
                         <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>

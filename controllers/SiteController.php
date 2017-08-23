@@ -126,6 +126,7 @@ class SiteController extends Controller
                 'product' => $product,
                 'name' => $category->categorie,
                 'id' => $id,
+                'categorie' => $category,
             ]);
     }
 
@@ -174,6 +175,7 @@ class SiteController extends Controller
      */
     public function actionOurWorks()
     {
+        $this->layout = 'white';
         return $this->render('our_works');
     }
 

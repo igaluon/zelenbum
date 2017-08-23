@@ -5,6 +5,8 @@ use \yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $products app\models\Product[] */
 /* @var $order app\models\Order */
+
+$lang = Yii::$app->request->get('lang');
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -48,13 +50,13 @@ use \yii\bootstrap\ActiveForm;
                 <?= Html::encode($product->product) ?>
             </div>
             <div class="col-xs-2">
-                $<?= $product->price ?>
+                <?php echo $lang == 'en' ?  '$' .round($product->price/26) :  $product->price. 'грн';?>
             </div>
             <div class="col-xs-2">
                 <?= $quantity = $product->getQuantity()?>
             </div>
             <div class="col-xs-2">
-                $<?= $product->getCost() ?>
+                <?php echo $lang == 'en' ?  '$' .round($product->getCost()/26) :  $product->getCost(). 'грн';?>
             </div>
         </div>
         <?php endforeach ?>
@@ -63,7 +65,8 @@ use \yii\bootstrap\ActiveForm;
 
             </div>
             <div class="col-xs-2">
-                <?=\Yii::t('app', 'Обшая сумма: ')?><?= $total ?>
+                <?=\Yii::t('app', 'Обшая сумма: ')?>
+                <?php echo $lang == 'en' ?  '$' .round($total/26) :  $total. 'грн';?>
             </div>
         </div>
 

@@ -13,6 +13,7 @@ use yii\behaviors\SluggableBehavior;
  * @property int $parent_id
  * @property string $categorie
  * @property string $slug
+ * @property string $description
  *
  * @property Categorie $parent
  * @property Categorie[] $categories
@@ -47,6 +48,7 @@ class Categorie extends \yii\db\ActiveRecord
             [['categorie'], 'required'],
             [['parent_id'], 'integer'],
             [['categorie', 'slug'], 'string', 'max' => 255],
+            [['description',], 'string',],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['parent_id' => 'id']],
         ];
     }
@@ -61,6 +63,7 @@ class Categorie extends \yii\db\ActiveRecord
             'categorie' => 'Категория',
             'slug' => 'Slug',
             'parent_id' => 'Родительская',
+            'description' => 'Описание',
         ];
     }
 

@@ -20,6 +20,8 @@ $categories = Categorie::find()->indexBy('id')->orderBy('id')->all();
 
     <?= $form->field($model, 'parent_id')->dropDownList(\yii\helpers\ArrayHelper::map($categories, 'id', 'categorie'), ['prompt' => 'Root']) ?>
 
+    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
