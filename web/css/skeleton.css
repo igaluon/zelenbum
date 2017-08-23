@@ -34,7 +34,11 @@
 	.grid_10,
 	.grid_11,
 	.grid_12
-	{ float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+	{ float: none;
+        display: inline-block;
+        margin-left: 10px;
+        /*margin-right: 10px;*/
+    }
 
     /* Nested Column Classes */
      .container_12 .alpha               { margin-left: 0; }

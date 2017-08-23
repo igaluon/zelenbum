@@ -9,6 +9,7 @@ use app\models\Product;
 use app\models\User;
 use app\component\GoMail;
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,6 +84,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        echo " <p>" .\Yii::$app->session->get('success') ? \Yii::$app->session->get('success') : \Yii::$app->session->get('error')."<p>";
+
+        \Yii::$app->session->set('success', '');
+
+        \Yii::$app->session->get('error', '');
+
         \Yii::$app->cache->flush();
 
         $model = new Categorie();
@@ -137,8 +144,8 @@ class SiteController extends Controller
 
                 \Yii::$app->gomail->sendMail($model->phone,$body);
 
-                print "Send success";
-            die;
+//                print "Send success";
+//            die;
 
 //        }
        }

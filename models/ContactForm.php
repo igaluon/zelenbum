@@ -22,9 +22,9 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'phone', 'body'], 'required', 'message' => '*Поле обязательное к заполнению.'],
+            [['name', 'email', 'phone', 'body'], 'required', 'message' => \Yii::t('app', '*Поле обязательное к заполнению.')],
             // email has to be a valid email address
-            ['email', 'email', 'message' => '*Введите корректрый емейл.'],
+            ['email', 'email', 'message' => \Yii::t('app', '*Введите корректрый емейл.')],
 //            ['name', 'lang' => 'ru', 'message' => 'Неправильное имя'],
         ];
     }

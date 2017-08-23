@@ -20,12 +20,11 @@ use yii\helpers\Markdown;
                 <div class="wrapper">
                     <div class="grid_10 alpha">
                         <h2 class="indent-bot-4"><?=yii\helpers\Html::encode($name)?></h2>
-                        <p class="indent-bot-3">AENEAN NONUMMY HENDRERIT MAURIS. PHASELLUS PORTA. FUSCE SUSCIPIT VARIUS MI. CUM SOCIIS NATOQUE PENATIBUS ET MAGNIS DIS PARTURIENT MONTES, NASCETUR RIDICULUS MUS. NULLA DUI. FUSCE FEUGIAT MALESUADA ODIO. MORBI NUNC ODIO, GRAVIDA AT, CURSUS NEC, LUCTUS A, LOREM. MAECENAS TRISTIQUE ORCI AC SEM.</p>
+                        <?php foreach($product as $value) {?>
+                        <p class="indent-bot-3"><?=\Yii::t('app', 'Цена : ')?></p>
                     </div>
-                </div>
-                <div class="wrapper">
                   <div id="show-image">
-                    <?php foreach($product as $value) {?>
+
                     <div class="grid_3 indent-bot-5 rt-grid-1">
                         <?=Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
                         <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>
@@ -35,5 +34,6 @@ use yii\helpers\Markdown;
                     </div>
                     <?php } ?>
                   </div>
+                </div>
 
             </section><!-- end content -->

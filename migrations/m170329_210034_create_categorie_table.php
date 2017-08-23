@@ -17,6 +17,7 @@ class m170329_210034_create_categorie_table extends Migration
             'slug' => $this->string(),
             'parent_id' => $this->integer()->defaultValue(null),
         ], $tableOptions);
+
         $this->addForeignKey('fk-categorie-parent_id-categorie-id', '{{%categorie}}', 'parent_id', '{{%categorie}}', 'id', 'CASCADE');
 
     }

@@ -25,9 +25,9 @@ use \yii\helpers\Html;
         </div>
 
         <div class="cart">
-            <h1>Ваша корзина</h1>
+            <h1><?=\Yii::t('app', 'Ваша корзина : ')?></h1>
             <?php if (empty($products)) {?>
-                <h1>пуста</h1>
+                <h1><?=\Yii::t('app', 'пуста')?></h1>
             <?php } ?>
             <?php foreach ($products as $product):?>
             <div class="container-fluid">
@@ -36,13 +36,13 @@ use \yii\helpers\Html;
 
                     </div>
                     <div class="col-xs-2">
-                        Цена
+                        <?=\Yii::t('app', 'Цена')?>
                     </div>
                     <div class="col-xs-2">
-                        Количество
+                        <?=\Yii::t('app', 'Количество')?>
                     </div>
                     <div class="col-xs-2">
-                        Сумма
+                        <?=\Yii::t('app', 'Сумма')?>
                     </div>
                     <div class="col-xs-2">
 
@@ -75,10 +75,10 @@ use \yii\helpers\Html;
 
                     </div>
                     <div class="col-xs-2">
-                        Обшая сумма: $<?= $total ?>
+                        <?=\Yii::t('app', 'Обшая сумма:')?> $<?= $total ?>
                     </div>
                     <div class="col-xs-2">
-                        <?= Html::a('Купить', ['cart/order'], ['class' => 'btn btn-success'])?>
+                        <?= Html::a(\Yii::t('app', 'Купить'), ['cart/order'], ['class' => 'btn btn-success'])?>
                     </div>
                 </div>
             </div>

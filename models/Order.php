@@ -63,10 +63,10 @@ class Order extends \yii\db\ActiveRecord
             'id' => 'Номер',
             'created_at' => 'Создание',
             'updated_at' => 'Обновление',
-            'phone' => 'Телефон',
+            'phone' => \Yii::t('app', 'Телефон'),
             'address' => 'Адресс',
             'email' => 'Email',
-            'notes' => 'Заметки',
+            'notes' => \Yii::t('app', 'Заметки'),
             'status' => 'Статус',
         ];
     }

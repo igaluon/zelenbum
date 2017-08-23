@@ -83,7 +83,7 @@ class ProductController extends Controller
             // Достаем картинку из формы
             $product->images = UploadedFile::getInstance($product, 'images');
             // Если картинка не выбрана - сохраняем остальные поля в базу и редирект на index
-            if ($product->images == null) {
+            if ($product->images == null && $product->validate()) {
 
                 $product->save();
 

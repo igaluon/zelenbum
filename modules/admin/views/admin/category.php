@@ -23,14 +23,14 @@ use yii\widgets\ActiveForm;
             'multiple' => true,
         ],
         'pluginOptions' => [
-            'uploadUrl' => \yii\helpers\Url::to(['file-upload-images']),
-            'deleteUrl' => \yii\helpers\Url::to(['file-upload-images']),
+            'uploadUrl' => \yii\helpers\Url::to(['file-upload-images', 'id' => $id]),
+            'deleteUrl' => \yii\helpers\Url::to(['file-upload-images', 'id' => $id]),
             'uploadExtraData' => [
                 'name' => $name,
             ],
             'overwriteInitial' => false,
             'allowedFileExtensions' =>  ['jpg', 'png','gif'],
-            'initialPreviewConfig' => ['width' => 20, 'heigth' => 120 ],
+            'initialPreviewConfig' => ['width' => 200, 'heigth' => 200 ],
             'initialPreview' => $images,
             'showUpload' => true,
             'showRemove' => false,

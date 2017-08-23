@@ -25,7 +25,7 @@ use \yii\bootstrap\ActiveForm;
         </div>
 
 <div class="cart">
-    <h1>Ваша корзина</h1>
+    <h1><?=\Yii::t('app', 'Ваша корзина : ')?></h1>
 
     <div class="container-fluid">
         <div class="row">
@@ -33,13 +33,13 @@ use \yii\bootstrap\ActiveForm;
 
             </div>
             <div class="col-xs-2">
-                Цена
+                <?=\Yii::t('app', 'Цена')?>
             </div>
             <div class="col-xs-2">
-                Количество
+                <?=\Yii::t('app', 'Количество')?>
             </div>
             <div class="col-xs-2">
-                Сумма
+                <?=\Yii::t('app', 'Сумма')?>
             </div>
         </div>
         <?php foreach ($products as $product):?>
@@ -63,7 +63,7 @@ use \yii\bootstrap\ActiveForm;
 
             </div>
             <div class="col-xs-2">
-                Обшая сумма: $<?= $total ?>
+                <?=\Yii::t('app', 'Обшая сумма: ')?><?= $total ?>
             </div>
         </div>
 
@@ -83,7 +83,7 @@ use \yii\bootstrap\ActiveForm;
 
                 <div class="form-group row">
                     <div class="col-xs-12">
-                        <?= Html::submitButton('Order', ['class' => 'btn btn-primary']) ?>
+                        <?= Html::submitButton(\Yii::t('app', 'Купить'), ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
 

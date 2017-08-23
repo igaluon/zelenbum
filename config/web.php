@@ -86,12 +86,13 @@ $config = [
             'rules' => [
 //                '<lang:' . app\languages\LanguageKsl::$url_language . '>' => 'site/index',
                 '<lang:(ru|uk|en)?>' => 'site/index',
-                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(product|our-works|contacts)>' => '<controller>/<action>',
+                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(product)>' => '<controller>/<action>',
+                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(our-works|contacts)>' => '<controller>/<action>',
                 '<lang:(ru|uk|en)?>/<controller:(cart)>/<action:(list|order)>' => '<controller>/<action>',
 //                'admin/login' => 'admin/admin/login',
                 'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
-                '<controller:(admin|seo)>/<action:(\w+?)>' => '<controller>/<action>',
+                '<controller:(admin|seo|image)>/<action:(\w+?)>' => '<controller>/<action>',
 
 //                '<controller:(site|product)>/<lang:\w+>/<action:(index|update|delete)>' => '<controller>/<action>',
 //              'web/.<language: \w+>./site/product' => 'site/product',

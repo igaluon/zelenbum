@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Categorie;
+use app\models\Product;
 use app\models\CategorieSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -117,6 +118,11 @@ class CategorieController extends Controller
      */
     public function actionDelete($id)
     {
+        if( $image = Product::find()->where(['categorie_id' => $id])->all() ) {
+           foreach ($image as $img) {
+               unlink(Yii::$app->request->getBaseUrl() .$img->image);
+           }
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
