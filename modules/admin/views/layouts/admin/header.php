@@ -1,5 +1,8 @@
-<?php/* @var $content string */
+<?php
+
 use yii\helpers\Html;
+
+/* @var $content string */
 
 /* @var $this \yii\web\View */
 
@@ -7,7 +10,7 @@ use yii\helpers\Html;
 
 <header class="main-header">
 
-    <?= yii\helpers\Html::a('<span>Zelenbum</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= yii\helpers\Html::a('<span>Zelenbum</span>', \yii\helpers\Url::to(\Yii::$app->homeUrl), ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 

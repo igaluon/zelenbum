@@ -85,7 +85,7 @@ class Product extends ActiveRecord implements CartPositionInterface
     {
         return [
             [['categorie_id', 'price'], 'integer'],
-            [['product', 'price'], 'required'],
+//            [['product', 'price'], 'required'],
             [['description'], 'string'],
             [['product', 'slug', 'image'], 'string', 'max' => 255],
             [['categorie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorie::className(), 'targetAttribute' => ['categorie_id' => 'id']],

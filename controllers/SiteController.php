@@ -144,13 +144,11 @@ class SiteController extends Controller
                 $body .= " <div>Email: <b> ".$model->email." </b></div>";
 
                 \Yii::$app->gomail->sendMail($model->phone,$body);
-
-//                print "Send success";
-//            die;
-
-//        }
+                \Yii::$app->session->set('success', 'Ok');
        }
-        return $this->render("contact", ['model' => $model]);
+
+        $success = \Yii::$app->session->get('success');
+        return $this->render("contact", ['model' => $model, 'success' => $success]);
 
     }
 

@@ -28,7 +28,9 @@ $lang = Yii::$app->request->get('lang');
 
 <div class="cart">
     <h1><?=\Yii::t('app', 'Ваша корзина : ')?></h1>
-
+    <?php if (empty($products)) {?>
+        <h1><?=\Yii::t('app', 'пуста')?></h1>
+    <?php } ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4">
@@ -47,7 +49,7 @@ $lang = Yii::$app->request->get('lang');
         <?php foreach ($products as $product):?>
         <div class="row">
             <div class="col-xs-4">
-                <?= Html::encode($product->product) ?>
+                <?= Html::encode(\Yii::t('app', $product->product)) ?>
             </div>
             <div class="col-xs-2">
                 <?php echo $lang == 'en' ?  '$' .round($product->price/26) :  $product->price. 'грн';?>

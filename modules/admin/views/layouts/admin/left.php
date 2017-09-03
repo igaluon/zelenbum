@@ -35,7 +35,7 @@
                                 ['label' => 'Товары', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/product']],
                                 ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/categorie']],
                                 ['label' => 'Заказы', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/order']],
-                                ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' =>['/seo/meta']],
+//                                ['label' => 'SEO', 'icon' => 'fa fa-dashboard', 'url' =>['/seo/meta']],
                             ],
                 'activeCssClass' => 'active',
                 'activateParents' => true,

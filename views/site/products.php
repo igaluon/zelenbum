@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
+$lang = Yii::$app->request->get('lang');
 ?>
 
 
@@ -26,9 +27,9 @@ use yii\helpers\Markdown;
                     <?php foreach($product as $value) {?>
                     <div class="grid_3 indent-bot-5 rt-grid-1">
                         <?=Html::img(Yii::$app->request->baseUrl .'/' .$value->image, ['class', "indent-bot-3 rt-img-1 {width:100%;}"])?>
-                        <p><a class="link-1" href="#"><?=yii\helpers\Html::encode($value->product)?></a></p>
-                        <p><?=Markdown::process($value->description)?></p>
-                        <p><?=Html::encode(\Yii::t('app', 'Цена : ') .$value->price .'грн')?></p>
+                        <p><a class="link-1" href="#"><?=yii\helpers\Html::encode(\Yii::t('app', $value->product))?></a></p>
+                        <p><?=Markdown::process(\Yii::t('app', $value->description))?></p>
+                        <p><?=Html::encode(\Yii::t('app', 'Цена : '))?><?=$lang == 'en' ? '$'.round($value->price/26) : $value->price. 'грн'?></p>
                         <?= Html::a(\Yii::t('app', 'Добавить в корзину'), ['cart/add', 'id' => $value->id], ['class' => 'korzina'])?>
                     </div>
                     <?php } ?>

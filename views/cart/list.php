@@ -3,6 +3,7 @@ use \yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $products app\models\Product[] */
+
  $lang = Yii::$app->request->get('lang');
 ?>
 
@@ -26,10 +27,10 @@ use \yii\helpers\Html;
 
         <div class="cart">
             <h1><?=\Yii::t('app', 'Ваша корзина : ')?></h1>
-            <?php if (empty($products)) {?>
+    <?php foreach ($products as $product):?>
+    <?php if (empty($products)) {?>
                 <h1><?=\Yii::t('app', 'пуста')?></h1>
-            <?php } ?>
-            <?php foreach ($products as $product):?>
+            <?php ;} ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-4">

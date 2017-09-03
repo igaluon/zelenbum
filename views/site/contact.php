@@ -47,7 +47,10 @@
 
                             ]); ?>
 
-                            <div class="success" style="display: none;">Данные отправлены. Мы свяжемся с Вами в ближайшее время</div>
+                           <?php if($success == 'Ok') {?>
+                            <div class="success" style="display: block"><?=\Yii::t('app', 'Данные отправлены. Мы свяжемся с Вами в ближайшее время.')?></div>
+                            <?php }?>
+                            <?php \Yii::$app->session->remove('success');?>
 
                             <?= $form->field($model, 'name')->textInput(['placeholder' => \Yii::t('app', 'имя')])->label('') ?>
 
