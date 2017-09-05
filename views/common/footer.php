@@ -16,7 +16,7 @@
     if(isset($array_lang[$language])) unset($array_lang[$language]);
     ?>
 
-    <div class="language-ksl">
+    <div class="language-ks">
         <?php foreach ($array_lang as $lang) {
             echo ' '.$lang.' ';
         } ?>

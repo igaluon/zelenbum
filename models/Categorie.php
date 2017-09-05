@@ -92,6 +92,18 @@ class Categorie extends \yii\db\ActiveRecord
     }
 
     /**
+     * Получение id категории по ее названию для индексной сраницы
+     * @param $name
+     * @return mixed
+     */
+    static function getId($name)
+    {
+        $name_product = Categorie::find()->where(['categorie' => $name])->one();
+
+        return $name_product->id;
+    }
+
+    /**
      * Вывод главного меню
      * @return array
      */

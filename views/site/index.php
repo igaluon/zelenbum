@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
+/* @var $model app\models\Categorie */
+
+$lang = Yii::$app->request->get('lang');
+
 ?>
 
 <div class="clear"></div>
@@ -36,7 +40,7 @@ use yii\helpers\Markdown;
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img1.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=1"><?=\Yii::t('app', 'Камень')?></a></p>
+                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Камень')?>" ><?=\Yii::t('app', 'Камень')?></a></p>
             </a>
         </div>
         <div class="grid_4 rt-indent-bottom-1">
@@ -44,7 +48,7 @@ use yii\helpers\Markdown;
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img2.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=2"><?=\Yii::t('app', 'Садовая мебель')?></a></p>
+                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Садовая мебель')?>" ><?=\Yii::t('app', 'Садовая мебель')?></a></p>
             </a>
         </div>
         <div class="grid_4 omega">
@@ -52,7 +56,7 @@ use yii\helpers\Markdown;
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img3.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="/category?id=3"><?=\Yii::t('app', 'Ретро сувениры')?></a></p>
+                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Ретро сувениры')?>" ><?=\Yii::t('app', 'Ретро сувениры')?></a></p>
             </a>
         </div>
 

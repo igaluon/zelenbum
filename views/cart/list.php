@@ -19,7 +19,30 @@ use \yii\helpers\Html;
                     <nav>
                         <?php $itemsInCart = Yii::$app->cart->getCount(); ?>
                         <?= \app\widgets\menu\Menus::widget();?>
+
                     </nav>
+                    <?php
+                    /*
+                     * Вывод списка языков для выбора пользователю
+                     */
+
+                    $language = Yii::$app->language; //текущий язык
+                    //Создаем массив ссылок всех языков с соответствующими GET параметрами Українська
+                    $array_lang = [
+//                                'en' => Html::a('English', ['site/language', 'lang' => 'en']),
+                        'en' => Html::a(Html::img("/images/usa.gif", ['alt' => 'English', 'width' => '30px',  'height' => '15px']), ['site/language', 'lang' => 'en']),
+                        'ru' => Html::a(Html::img("/images/russia.gif", ['alt' => 'Русский', 'width' => '30px',  'height' => '15px']), ['site/language', 'lang' => 'ru']),
+                        'uk' => Html::a(Html::img("/images/ukraina.gif", ['alt' => 'Українська', 'width' => '30px',  'height' => '15px']), ['site/language', 'lang' => 'uk']),
+                    ];
+                    //ссылку на текущий язык не выводим
+                    if(isset($array_lang[$language])) unset($array_lang[$language]);
+                    ?>
+
+                    <div class="language-ksl">
+                        <?php foreach ($array_lang as $lang) {
+                            echo ' '.$lang.' ';
+                        } ?>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </header><!-- end header -->
@@ -27,9 +50,10 @@ use \yii\helpers\Html;
 
         <div class="cart">
             <h1><?=\Yii::t('app', 'Ваша корзина : ')?></h1>
+
     <?php foreach ($products as $product):?>
-    <?php if (empty($products)) {?>
-                <h1><?=\Yii::t('app', 'пуста')?></h1>
+    <?php if (empty($product)) {?>
+                <h1><?=\Yii::t('app', 'пустая')?></h1>
             <?php ;} ?>
             <div class="container-fluid">
                 <div class="row">

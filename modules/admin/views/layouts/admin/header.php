@@ -1,16 +1,18 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $content string */
-
 /* @var $this \yii\web\View */
+
+//$lang = Yii::$app->request->get('lang');
 
 ?>
 
 <header class="main-header">
 
-    <?= yii\helpers\Html::a('<span>Zelenbum</span>', \yii\helpers\Url::to(\Yii::$app->homeUrl), ['class' => 'logo']) ?>
+    <?= Html::a('<span>Zelenbum</span>', Url::to(\Yii::$app->request->hostInfo) .'/ru', ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -22,7 +24,7 @@ use yii\helpers\Html;
 
             <ul class="nav navbar-nav">
                 <li>
-                    <?= yii\helpers\Html::a('Logout',yii\helpers\Url::toRoute('/admin/logout'))?>
+                    <?= Html::a('Logout',Url::toRoute('/admin/logout'))?>
                 </li>
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

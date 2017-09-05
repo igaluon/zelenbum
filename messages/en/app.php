@@ -60,7 +60,7 @@ return [
     'Цена : ' => 'Price : ',
     'Что о нас говорят' => 'What they say about us',
     'имя' => 'name',
-    'пуста' => 'empty',
+    'пустая' => 'empty',
     'сообщение' => 'message',
     'телефон' => 'phone',
     'Садовый комплект' => 'Garden kit',

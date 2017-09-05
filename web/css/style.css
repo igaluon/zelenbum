@@ -506,3 +506,6 @@ footer {
     display: inline-block;
     margin-left: 14px;
 }
+.language-ksl {
+    float: right;
+}
