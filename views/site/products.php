@@ -20,7 +20,7 @@ $lang = Yii::$app->request->get('lang');
             <section id="content">
                 <div class="wrapper">
                     <div class="grid_10 alpha">
-                        <h2 class="indent-bot-4"><?=yii\helpers\Html::encode(\Yii::t('app', $name))?></h2>
+                        <h2 class="indent-bot-4"><?=yii\helpers\Html::encode(\Yii::t('app', $categorie->categorie))?></h2>
                         <p class="indent-bot-3"><?=\Yii::t('app', $categorie->description)?></p>
                     </div>
                   <div id="show-image">

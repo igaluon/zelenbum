@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'name' => 'Зеленбум',
-    'language'=>'ru',
+//    'language'=>'ru-RU',
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'seo',
@@ -16,9 +16,6 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
-//        'seo' => [
-//            'class' => \notgosu\yii2\modules\metaTag\Module::className(),
-//        ],
         'seo' => [
             'class' => 'aquy\seo\module\Meta'
         ],
@@ -47,7 +44,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => 'admin/admin/login',
+            'loginUrl' => '/admin/login',
         ],
         'cart' => [
             'class' => 'yz\shoppingcart\ShoppingCart',
@@ -86,27 +83,14 @@ $config = [
             'rules' => [
 //                '<lang:' . app\languages\LanguageKsl::$url_language . '>' => 'site/index',
                 '<lang:(ru|uk|en)?>' => 'site/index',
-                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(product)>' => '<controller>/<action>',
-                '<lang:(ru|uk|en)?>/<controller:(site)>/<action:(our-works|contacts)>' => '<controller>/<action>',
-                '<lang:(ru|uk|en)?>/<controller:(cart)>/<action:(list|order|update)>' => '<controller>/<action>',
-//                'admin/login' => 'admin/admin/login',
+                '<lang:(ru|uk|en)?>/<action:(product)>/<name:[\w\-]+>' => 'site/<action>',
+                '<lang:(ru|uk|en)?>/<action:(our-works|contacts)>' => 'site/<action>',
+                '<lang:(ru|uk|en)?>/<controller:(cart)>/<action:(list|order|update|remove)>' => '<controller>/<action>',
                 'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
+                '/admin/login' => 'admin/admin/login',
                 '<controller:(admin|seo|image)>/<action:(\w+?)>' => '<controller>/<action>',
 
-//                '<controller:(site|product)>/<lang:\w+>/<action:(index|update|delete)>' => '<controller>/<action>',
-//              'web/.<language: \w+>./site/product' => 'site/product',
-//              'web/site/.<language: \w+>./product' => 'site/<language>/product',
-//                'http://<language:\w+>.example.com/posts' => 'post/index,
-//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/page-<page:\d+>/' => 'post/index',
-//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/' => 'site/index',
-//
-//                [
-//                    'pattern'=> '<lang:' . app\languages\LanguageKsl::$url_language . '>/<url\w+>',
-//                    'route' => 'site/index',
-//                    'suffix' => '.php',
-//                ],
-//                '<lang:' . app\languages\LanguageKsl::$url_language . '>/<action:(contact|product|about)>' => 'site/<action>',
             ]
         ],
     ],

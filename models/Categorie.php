@@ -132,7 +132,7 @@ class Categorie extends \yii\db\ActiveRecord
                 $menuItems[$category->id] = [
 //                    'label' => \app\widgets\menu\Menus::t('menu' ,$category->categorie),
                     'label' => \app\widgets\menu\Menus::t('menu', $category->categorie),
-                    'url' => ['site/product', 'id' => $category->id],
+                    'url' => ['site/product', 'name' => $category->slug],
                     'items' => static::getMenuItems($categories, $activeId, $category->id),
                 ];
             }

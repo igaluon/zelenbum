@@ -318,7 +318,7 @@ class AdminController extends Controller
 
         \Yii::$app->user->logout();
 //        return $this->goBack();
-        return $this->redirect('admin/login');
+        return $this->redirect('/admin/login');
     }
 
     /**
@@ -377,7 +377,7 @@ class AdminController extends Controller
 //    public function actionAddAdmin()
 //    {
 //        $model = User::find()->one();
-
+//
 //        if (empty($model)) {
 //            $user = new User();
 //            $user->username = 'admin';

@@ -72,9 +72,6 @@ class Product extends ActiveRecord implements CartPositionInterface
                 'class' => SluggableBehavior::className(),
                 'attribute' => ['product'],
             ],
-//            'seo' => [
-//                'class' => \notgosu\yii2\modules\metaTag\components\MetaTagBehavior::className(),
-//                'languages' => ['en', 'ua', 'ru'],            ]
         ];
     }
 

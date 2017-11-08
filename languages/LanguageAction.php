@@ -34,7 +34,6 @@ class LanguageAction extends \yii\base\Action
         $match_arr[2] = '/'.$language;
         // создание нового URL
         $url = $match_arr[1].$match_arr[2].$match_arr[3];
-//        var_dump($url);die;
         // перенаправление
         Yii::$app->response->redirect($url);
     }

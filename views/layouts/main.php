@@ -22,7 +22,7 @@ AppAsset::register($this);
     if (is_null(Yii::$app->seo->block('title'))) {
         echo '<title>' . $this->title . '</title>';
     } else {
-        echo '<title>' . Html::encode(\aquy\seo\module\Meta::t('app', Yii::$app->seo->block('title'))) . '</title>';
+        echo '<title>' . Html::encode( Yii::$app->seo->block('title')) . '</title>';
 //        echo '<title>' . Html::encode(Yii::$app->seo->block('title')) . '</title>';
     }
     ?>

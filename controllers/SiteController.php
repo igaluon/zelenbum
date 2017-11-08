@@ -17,6 +17,24 @@ use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+//            [
+//                'class' => 'yii\filters\PageCache',
+//                'only' => ['index', 'contacts', 'ourworks'],
+//                'duration' => 60,
+//                'variations' => [
+//                    \Yii::$app->language,
+//                ],
+////                'dependency' => [
+////                    'class' => 'yii\caching\DbDependency',
+////                    'sql' => 'SELECT COUNT(*) FROM product',
+////                ],
+//            ],
+        ];
+    }
     /**
      * @param \yii\base\Action $action
      * @return bool
@@ -55,7 +73,7 @@ class SiteController extends Controller
 
         \Yii::$app->session->set('success', '');
 
-        \Yii::$app->session->get('error', '');
+        \Yii::$app->session->set('error', '');
 
         \Yii::$app->cache->flush();
 
@@ -77,22 +95,17 @@ class SiteController extends Controller
      * @param $id
      * @return string
      */
-    public function actionProduct($id)
+    public function actionProduct($name)
     {
         $this->layout = 'products';
 
-        $model = new Categorie();
+        $category = Categorie::findOne(['slug' => $name]);
 
-        $product = Product::findAll(['categorie_id' => $id]);
-
-        $category = Categorie::findOne(['id' => $id]);
+        $product = Product::findAll(['categorie_id' => $category->id]);
 
         return $this->render('products',
             [
-                'model' => $model,
                 'product' => $product,
-                'name' => $category->categorie,
-                'id' => $id,
                 'categorie' => $category,
             ]);
     }
