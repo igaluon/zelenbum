@@ -315,10 +315,9 @@ class AdminController extends Controller
      */
     public function actionLogout($destroySession = true)
     {
-
         \Yii::$app->user->logout();
-//        return $this->goBack();
-        return $this->redirect('/admin/login');
+        return $this->goBack();
+//        return $this->redirect('/admin/login');
     }
 
     /**

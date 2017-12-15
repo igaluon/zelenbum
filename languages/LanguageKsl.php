@@ -30,6 +30,7 @@ class LanguageKsl
 
             Yii::$app->response->redirect('/admin');
         }
+
         //Если URL содержит указатель языка - сохраняем его в параметрах приложения и используем
         if (isset($match_arr[1]) && $match_arr[0] != '/'){
             Yii::$app->language = $match_arr[1] ? $match_arr[1]: Yii::$app->language;

@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'zelendum',
     'name' => 'Зеленбум',
 //    'language'=>'ru-RU',
     'basePath' => dirname(__DIR__),
@@ -19,27 +19,24 @@ $config = [
         'seo' => [
             'class' => 'aquy\seo\module\Meta'
         ],
+        'transfer' => [
+            'class' => 'app\modules\transfer\Module',
+        ],
+        'loginUrl' => '/transfer/login',
     ],
     'components' => [
-//        'i18n' => [
-//            'translations' => [
-//                'app*' => [
-//                    'class' => 'yii\i18n\PhpMessageSource',
-//                    //'basePath' => '@app/messages',
-//                    'sourceLanguage' => 'ru',
-////                    'fileMap' => [
-////                        'app'       => 'app.php',
-////                        'app/error' => 'error.php',
-////                    ],
-//                ],
-//            ],
-//        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dBjBzMTsoFsUtpIF4GAaAqtGVC3hjCfo',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'users' => [
+            'identityClass' => 'app\modules\transfer\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => '/transfer/login',
+            'class' => 'yii\web\User',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -89,8 +86,9 @@ $config = [
                 'admin' => 'admin/product',
                 'admin/logout' => 'admin/admin/logout',
                 '/admin/login' => 'admin/admin/login',
-                '<controller:(admin|seo|image)>/<action:(\w+?)>' => '<controller>/<action>',
-
+                '<controller:(admin|seo|image )>/<action:(\w+?)>' => '<controller>/<action>',
+                'transfer' => 'transfer/transfer/index',
+                'transfer/<action:(\w+?)>' => 'transfer/transfer/<action>',
             ]
         ],
     ],

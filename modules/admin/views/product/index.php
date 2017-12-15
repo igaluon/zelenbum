@@ -9,6 +9,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$Product_find_all = app\models\Product::find()->all();
+
 $this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -51,14 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => 'product',
                 'label' => 'Название товара',
-                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'product', 'product')
+                'filter' => \yii\helpers\ArrayHelper::map($Product_find_all, 'product', 'product')
             ],
             [
                 'attribute' => 'price',
                 'format' => 'raw',
                 'value' => 'price',
                 'label' => 'Цена',
-                'filter' => \yii\helpers\ArrayHelper::map(\app\models\Product::find()->all(), 'price', 'price')
+                'filter' => \yii\helpers\ArrayHelper::map($Product_find_all, 'price', 'price')
             ],
             'description:ntext',
             [

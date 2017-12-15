@@ -40,7 +40,7 @@ $lang = Yii::$app->request->get('lang');
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img1.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Камень')?>" ><?=\Yii::t('app', 'Камень')?></a></p>
+                <p class="img-caption"><a href="<?= \yii\helpers\Url::to(['/site/product', 'name'=>'kamen'])?>" ><?=\Yii::t('app', 'Камень')?></a></p>
             </a>
         </div>
         <div class="grid_4 rt-indent-bottom-1">
@@ -48,7 +48,7 @@ $lang = Yii::$app->request->get('lang');
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img2.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Садовая мебель')?>" ><?=\Yii::t('app', 'Садовая мебель')?></a></p>
+                <p class="img-caption"><a href="<?= \yii\helpers\Url::to(['/site/product', 'name'=>'sadovaa-mebel'])?>" ><?=\Yii::t('app', 'Садовая мебель')?></a></p>
             </a>
         </div>
         <div class="grid_4 omega">
@@ -56,7 +56,7 @@ $lang = Yii::$app->request->get('lang');
                 <div class="img-border indent-bot-3">
                     <img src="<?php echo Yii::$app->request->baseUrl; ?>/images/page1-img3.jpg" alt="" />
                 </div>
-                <p class="img-caption"><a href="<?= $lang?>/site/product?id=<?= $model::getId('Ретро сувениры')?>" ><?=\Yii::t('app', 'Ретро сувениры')?></a></p>
+                <p class="img-caption"><a href="<?= \yii\helpers\Url::to(['/site/product', 'name'=>'retro-suveniry'])?>" ><?=\Yii::t('app', 'Ретро сувениры')?></a></p>
             </a>
         </div>
 
